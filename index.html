@@ -1,443 +1,684 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Priyanshu's Galaxy — For Ria ✨</title>
-  <style>
-    :root{
-      --bg:#020414;
-      --accent:#84f1ff;
-      --soft:#9bd3ff;
-      --rose:#ff6b9a;
-      --glass: rgba(255,255,255,0.06);
-      --glass-2: rgba(255,255,255,0.04);
-      --card-shadow: 0 8px 30px rgba(0,0,0,0.85);
-      --radius:18px;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    html,body{height:100%;margin:0;background:var(--bg);color:#eaf6ff;overflow:hidden}
-    /* full-canvas star background */
-    #spaceCanvas{position:fixed;inset:0;z-index:0}
-
-    /* center UI */
-    .ui{
-      position:relative;z-index:10;display:grid;grid-template-columns: 430px 1fr;gap:28px;padding:36px;align-items:start;height:100vh;box-sizing:border-box;
-    }
-
-    /* left panel */
-    .card{
-      backdrop-filter: blur(8px) saturate(1.05);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);box-shadow:var(--card-shadow);padding:20px;
-    }
-    header h1{font-size:20px;margin:0 0 6px 0}
-    header p{margin:0;color:rgba(255,255,255,0.65);font-size:13px}
-
-    .logo{display:flex;gap:12px;align-items:center}
-    .logo .badge{width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--rose));display:flex;align-items:center;justify-content:center;font-weight:700}
-
-    /* game buttons */
-    .controls{margin-top:16px;display:flex;flex-direction:column;gap:10px}
-    .btn{background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:600}
-    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
-    .small{padding:8px 10px;font-size:14px}
-
-    /* right area */
-    .stage{height:calc(100vh - 72px);display:flex;flex-direction:column;gap:14px}
-    .panel{flex:1;border-radius:16px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);box-shadow:var(--card-shadow);overflow:auto}
-
-    /* starfield area */
-    #starfield{position:relative;height:100%;display:flex;align-items:center;justify-content:center}
-    #playArea{width:100%;height:100%;position:relative}
-
-    /* messages */
-    .messageBox{position:absolute;left:20px;bottom:20px;padding:12px 14px;border-radius:12px;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.35));border:1px solid rgba(255,255,255,0.04)}
-
-    /* love meter */
-    .meterWrap{display:flex;align-items:center;gap:12px}
-    input[type=range]{width:100%}
-    .meterVal{min-width:60px;text-align:center}
-
-    /* quiz */
-    .quiz qItem{display:block}
-    .quiz .opt{display:block;margin:8px 0}
-
-    /* rocket */
-    .rocket{position:absolute;right:40px;bottom:40px;width:84px;height:84px;transform-origin:50% 100%;transition:transform 1.2s cubic-bezier(.2,.9,.3,1)}
-    .rocket svg{width:100%;height:100%}
-    .launching{animation:launch 2.6s ease forwards}
-    @keyframes launch{0%{transform:translateY(0) scale(1) rotate(0)}60%{transform:translateY(-48vh) scale(1.05) rotate(4deg)}100%{transform:translateY(-120vh) scale(0.6) rotate(10deg);opacity:0}}
-
-    /* typewriter */
-    .typewriter{font-family:monospace;background:transparent;border-left:2px solid rgba(255,255,255,0.08);padding-left:8px}
-
-    /* final modal */
-    .finalModal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.85));z-index:40;backdrop-filter: blur(6px);visibility:hidden;opacity:0;transition:opacity .35s}
-    .finalModal.show{visibility:visible;opacity:1}
-    .finalCard{width:720px;max-width:94%;padding:28px;border-radius:20px;background:linear-gradient(180deg, rgba(8,6,20,0.9), rgba(12,8,30,0.95));border:1px solid rgba(255,255,255,0.04);text-align:center}
-    .finalCard h2{font-size:28px;margin-bottom:8px}
-    .finalCard p{color:rgba(255,255,255,0.78);line-height:1.4}
-    .final-actions{display:flex;gap:12px;justify-content:center;margin-top:18px}
-    .final-actions .btn{padding:12px 18px;border-radius:12px}
-
-    /* responsive */
-    @media (max-width:980px){
-      .ui{grid-template-columns:1fr;padding:18px;gap:12px}
-      .logo .badge{width:44px;height:44px}
-      .rocket{display:none}
-    }
-
-    /* fun little twinkle on found star */
-    .foundStar{position:absolute;padding:8px 12px;background:linear-gradient(90deg,var(--accent),var(--rose));border-radius:999px;color:#051017;font-weight:700;font-size:13px;transform:translate(-50%,-160%);pointer-events:none}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Priyanshu ❤️ Ria — Drawing Canvas</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#D4AF37; --dark:#050814; --bg:#0A0E27; --text:#F5F5F5; --muted:#B0B0B0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:linear-gradient(135deg,var(--dark),var(--bg));color:var(--text);font-family:'Poppins',sans-serif}
+body{display:flex;flex-direction:column;min-height:100vh}
+.header{padding:16px;text-align:center;background:linear-gradient(to bottom, rgba(212,175,55,0.04),transparent);border-bottom:1px solid rgba(212,175,55,0.08)}
+.header h1{font-family:'Playfair Display',serif;background:linear-gradient(135deg,var(--gold),#C9A961);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:24px}
+.header p{font-size:12px;color:var(--muted);margin-top:4px}
+.container{display:flex;gap:16px;padding:14px;flex:1;align-items:stretch}
+.canvas-wrap{flex:1;min-height:320px;border-radius:12px;background:rgba(255,255,255,0.96);box-shadow:0 12px 40px rgba(0,0,0,0.35);overflow:hidden;border:1px solid rgba(212,175,55,0.12);position:relative}
+#drawingCanvas{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;background:transparent}
+.toolbar{width:340px;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 120px);overflow:auto}
+.panel{background:rgba(10,14,32,0.85);padding:12px;border-radius:10px;border:1px solid rgba(212,175,55,0.08);box-shadow:0 10px 30px rgba(0,0,0,0.25)}
+.panel-title{color:var(--gold);font-weight:600;font-size:13px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.brush-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.btn{padding:8px;border-radius:8px;border:1px solid rgba(212,175,55,0.08);background:rgba(212,175,55,0.04);color:var(--text);cursor:pointer;font-size:13px}
+.btn.active{background:var(--gold);color:var(--dark);box-shadow:0 0 12px rgba(212,175,55,0.22)}
+.range{width:100%}
+.color-display{height:58px;border-radius:8px;border:2px solid rgba(212,175,55,0.08);box-shadow:inset 0 2px 8px rgba(0,0,0,0.15)}
+.color-row{display:grid;grid-template-columns:1fr 90px;gap:8px;margin-top:8px}
+.hex-input{padding:8px;border-radius:6px;background:rgba(212,175,55,0.03);border:1px solid rgba(212,175,55,0.06);color:var(--text);font-family:monospace}
+.palette{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.palette .sw{width:100%;aspect-ratio:1;border-radius:6px;border:2px solid rgba(212,175,55,0.06);cursor:pointer}
+.tools{display:flex;flex-direction:column;gap:8px}
+.small-row{display:flex;gap:8px}
+.layers-list{display:flex;flex-direction:column;gap:8px;max-height:220px;overflow:auto;margin-top:8px}
+.layer-item{display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;background:rgba(212,175,55,0.03);border:1px solid rgba(212,175,55,0.04);cursor:pointer}
+.layer-item.active{box-shadow:0 0 10px rgba(212,175,55,0.12);border-color:var(--gold);background:linear-gradient(90deg, rgba(212,175,55,0.06), rgba(212,175,55,0.02))}
+.layer-controls{display:flex;gap:6px;align-items:center}
+.footer{padding:12px;text-align:center;background:linear-gradient(to top, rgba(212,175,55,0.04),transparent);border-top:1px solid rgba(212,175,55,0.06);color:var(--muted);font-size:13px}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--gold);color:var(--dark);padding:10px 14px;border-radius:8px;box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+.sparkle{position:absolute;pointer-events:none;border-radius:50%;width:6px;height:6px;animation:spark 0.6s ease-out forwards}
+@keyframes spark{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0)}}
+@media (max-width:1024px){.container{flex-direction:column}.toolbar{width:100%;max-height:260px;flex-direction:row;overflow:auto}.panel{min-width:260px;flex-shrink:0}}
+</style>
 </head>
 <body>
-  <canvas id="spaceCanvas"></canvas>
+  <div class="header">
+    <h1>✨ Drawing Canvas</h1>
+    <p>Created with love by Priyanshu for Ria — upgraded & touch-fixed</p>
+  </div>
 
-  <div class="ui">
-    <div class="card">
-      <div class="logo">
-        <div class="badge">P</div>
-        <div>
-          <header>
-            <h1>Priyanshu's Galaxy</h1>
-            <p>For Ria — a starry cinematic proposal</p>
-          </header>
-          <div style="margin-top:10px;font-size:13px;color:rgba(255,255,255,0.7)">Tip: Type <strong>ria</strong> anywhere to reveal a secret letter ✨</div>
-        </div>
-      </div>
-
-      <div class="controls">
-        <button class="btn" id="btnFindStar">Find Ria's Star ⭐</button>
-        <button class="btn" id="btnQuiz">Mini Quiz: About Ria</button>
-        <button class="btn" id="btnLaunch">Mission to Ria (Launch Rocket)</button>
-        <button class="btn ghost small" id="btnLetter">Open Secret Letter</button>
-      </div>
-
-      <div style="margin-top:16px">
-        <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:8px">Love Meter</div>
-        <div class="meterWrap">
-          <input type="range" id="loveRange" min="0" max="100" value="70">
-          <div class="meterVal" id="loveVal">70%</div>
-        </div>
-      </div>
-
-      <div style="margin-top:14px;font-size:13px;color:rgba(255,255,255,0.75)">
-        <div><strong>Short Tasks</strong></div>
-        <ul style="margin:8px 0 0 20px;color:rgba(255,255,255,0.7)">
-          <li>Click a glowing star to leave a message</li>
-          <li>Answer quiz to unlock final scene</li>
-          <li>Drag the love meter to 100% for a surprise</li>
-        </ul>
-      </div>
-
-      <div style="margin-top:18px;font-size:12px;color:rgba(255,255,255,0.6)">Made with ♥ by Priyanshu — Customize the poem inside the secret letter.</div>
-
+  <div class="container">
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="drawingCanvas" aria-label="drawing canvas"></canvas>
+      <!-- optional overlay UI markers could go here -->
     </div>
 
-    <div class="stage">
-      <div class="panel" id="starfield">
-        <div id="playArea">
-          <!-- dynamic stars overlayed -->
-          <div class="messageBox" id="log">Welcome, Priyanshu. Guide Ria through the stars ✨</div>
-          <div id="foundMsg" class="foundStar" style="display:none">You found my heart ❤️</div>
-          <div class="rocket" id="rocket" title="Launch to Ria">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g>
-                <path d="M32 2c0 0-10 8-14 18-3 8 2 18 2 18s10-3 18-11S32 2 32 2z" fill="url(#g1)" />
-                <path d="M25 42c-2 5 2 8 2 8s5 1 10-6c-6 0-10-2-12-2z" fill="#ffb3c7" />
-                <defs>
-                  <linearGradient id="g1" x1="0" x2="1">
-                    <stop offset="0" stop-color="#84f1ff" />
-                    <stop offset="1" stop-color="#ff6b9a" />
-                  </linearGradient>
-                </defs>
-              </g>
-            </svg>
+    <div class="toolbar" id="toolbar">
+      <div class="panel">
+        <div class="panel-title">🎨 Brush</div>
+        <div class="brush-grid">
+          <button class="btn brush-btn active" data-brush="pencil">Pencil</button>
+          <button class="btn brush-btn" data-brush="charcoal">Charcoal</button>
+          <button class="btn brush-btn" data-brush="marker">Marker</button>
+          <button class="btn brush-btn" data-brush="oil">Oil</button>
+          <button class="btn brush-btn" data-brush="watercolor">Watercolor</button>
+          <button class="btn brush-btn" data-brush="airbrush">Airbrush</button>
+        </div>
+
+        <div style="margin-top:10px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>Size</span><span id="sizeVal">10</span></div>
+          <input class="range" id="sizeRange" type="range" min="1" max="200" value="10">
+        </div>
+        <div style="margin-top:8px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>Opacity</span><span id="opVal">100%</span></div>
+          <input class="range" id="opacityRange" type="range" min="0" max="100" value="100">
+        </div>
+        <div style="margin-top:8px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>Flow</span><span id="flowVal">100%</span></div>
+          <input class="range" id="flowRange" type="range" min="0" max="100" value="100">
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">🎯 Color</div>
+        <div class="color-display" id="colorPreview"></div>
+        <div class="color-row">
+          <input type="color" id="colorPicker" value="#000000">
+          <input type="text" id="hexInput" class="hex-input" maxlength="7" value="#000000">
+        </div>
+        <div style="margin-top:8px">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:6px">Alpha (Color)</div>
+          <input class="range" id="colorAlpha" type="range" min="0" max="255" value="255">
+        </div>
+        <div style="margin-top:10px" class="panel-title">Quick Colors</div>
+        <div class="palette">
+          <div class="sw" style="background:#000000"></div>
+          <div class="sw" style="background:#ffffff"></div>
+          <div class="sw" style="background:#FF6B6B"></div>
+          <div class="sw" style="background:#FFD93D"></div>
+          <div class="sw" style="background:#6BCB77"></div>
+          <div class="sw" style="background:#4D96FF"></div>
+          <div class="sw" style="background:#D4AF37"></div>
+          <div class="sw" style="background:#FF6B9D"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">🛠 Tools</div>
+        <div class="tools">
+          <div class="small-row">
+            <button class="btn" id="eraserBtn">Eraser</button>
+            <button class="btn" id="smudgeBtn">Smudge</button>
+            <button class="btn" id="mirrorBtn">Mirror</button>
+            <button class="btn" id="radialBtn">Radial</button>
+          </div>
+          <div class="small-row" style="margin-top:8px">
+            <button class="btn" id="undoBtn">↶ Undo</button>
+            <button class="btn" id="redoBtn">↷ Redo</button>
+            <button class="btn" id="clearBtn">Clear</button>
+            <button class="btn" id="downloadBtn">⬇ Download</button>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn" id="addLayerBtn">+ Layer</button>
+            <button class="btn" id="mergeBtn">Merge All</button>
           </div>
         </div>
       </div>
 
-      <div class="panel" style="display:flex;flex-direction:column;gap:12px">
-        <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
-          <div class="typewriter" id="typewriter">Loading message...</div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <button class="btn small" id="btnFinal">Show Final Proposal</button>
-            <button class="btn small ghost" id="btnReset">Reset</button>
-          </div>
-        </div>
-
-        <div style="display:flex;gap:12px;align-items:flex-start">
-          <div style="flex:1">
-            <div style="font-size:14px;margin-bottom:8px">Mini Quiz</div>
-            <div id="quizArea" style="background:var(--glass);padding:12px;border-radius:10px;min-height:120px">
-              <div id="quizQ">Press "Mini Quiz" to start</div>
-            </div>
-          </div>
-
-          <div style="width:220px">
-            <div style="font-size:14px;margin-bottom:8px">Short Log</div>
-            <div style="background:var(--glass-2);padding:10px;border-radius:10px;min-height:120px;font-size:13px;color:rgba(255,255,255,0.8)" id="miniLog">
-              Actions will appear here
-            </div>
-          </div>
-        </div>
+      <div class="panel">
+        <div class="panel-title">📚 Layers</div>
+        <div class="layers-list" id="layersList"></div>
       </div>
     </div>
   </div>
 
-  <!-- final modal -->
-  <div class="finalModal" id="finalModal">
-    <div class="finalCard">
-      <h2>Ria, will you be my forever star?</h2>
-      <p id="finalPoem"> </p>
-      <div class="final-actions">
-        <button class="btn" id="yesBtn">Yes — I'll be yours ✨</button>
-        <button class="btn ghost" id="noBtn">Wait... (prank)</button>
-      </div>
-    </div>
-  </div>
+  <div class="footer">Forever — Priyanshu × Ria</div>
 
-  <!-- secret letter modal -->
-  <div class="finalModal" id="letterModal">
-    <div class="finalCard">
-      <h2>A secret letter for Ria</h2>
-      <p style="text-align:left;white-space:pre-wrap;color:rgba(255,255,255,0.85)" id="secretLetter">
+<script>
+/* =========================
+   Core drawing engine
+   ========================= */
+const canvas = document.getElementById('drawingCanvas');
+const wrap = document.getElementById('canvasWrap');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-      </p>
-      <div style="margin-top:16px;text-align:center">
-        <button class="btn" id="closeLetter">Close</button>
-      </div>
-    </div>
-  </div>
+let DPR = Math.max(1, window.devicePixelRatio || 1);
 
-  <script>
-    // ---------- Utilities ----------
-    const $ = (s) => document.querySelector(s);
-    const spaceCanvas = $('#spaceCanvas');
-    const ctx = spaceCanvas.getContext('2d');
-    let w=spaceCanvas.width=innerWidth, h=spaceCanvas.height=innerHeight;
+// State
+let currentBrush = 'pencil';
+let currentColor = '#000000';
+let colorAlpha = 1; // 0..1
+let brushSize = 10;
+let brushOpacity = 1; // 0..1 (from opacityRange)
+let brushFlow = 1; // 0..1
+let brushHardness = 1;
+let isErasing = false;
+let isSmudging = false;
+let enableMirror = false;
+let enableRadial = false;
+let isDrawing = false;
+let lastPoint = null;
+let layers = [];
+let currentLayer = 0;
+let history = [];
+let historyStep = -1;
+const MAX_HISTORY = 40;
 
-    // ---------- Starfield with twinkle ----------
-    const stars = [];
-    function rand(a,b){return a+Math.random()*(b-a)}
-    function initStars(){
-      stars.length=0;
-      const count = Math.round((w*h)/6000);
-      for(let i=0;i<count;i++){
-        stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.6+0.2,alpha:Math.random(),dAlpha:Math.random()*0.02+0.002,glow:Math.random()>0.96?true:false})
+// Helpers: UI elements
+const sizeRange = document.getElementById('sizeRange');
+const sizeVal = document.getElementById('sizeVal');
+const opacityRange = document.getElementById('opacityRange');
+const opVal = document.getElementById('opVal');
+const flowRange = document.getElementById('flowRange');
+const flowVal = document.getElementById('flowVal');
+const colorPicker = document.getElementById('colorPicker');
+const hexInput = document.getElementById('hexInput');
+const colorPreview = document.getElementById('colorPreview');
+const colorAlphaInput = document.getElementById('colorAlpha');
+const layersList = document.getElementById('layersList');
+
+function showToast(msg, t=1100){
+  const d = document.createElement('div'); d.className='toast'; d.textContent = msg;
+  document.body.appendChild(d); setTimeout(()=>d.remove(), t);
+}
+
+// --- DPR aware resize
+function resizeCanvas() {
+  DPR = Math.max(1, window.devicePixelRatio || 1);
+  const rect = wrap.getBoundingClientRect();
+  const cssW = Math.max(200, Math.floor(rect.width));
+  const cssH = Math.max(200, Math.floor(rect.height));
+  canvas.style.width = cssW + 'px';
+  canvas.style.height = cssH + 'px';
+  const pxW = Math.floor(cssW * DPR);
+  const pxH = Math.floor(cssH * DPR);
+  // adjust each layer to new pixel size preserving content
+  for (let layer of layers) {
+    if (layer.canvas.width === pxW && layer.canvas.height === pxH) continue;
+    const tmp = document.createElement('canvas');
+    tmp.width = pxW; tmp.height = pxH;
+    const tctx = tmp.getContext('2d');
+    // draw old content stretched to new size (keeps relative positions)
+    tctx.drawImage(layer.canvas, 0, 0, layer.canvas.width, layer.canvas.height, 0,0, pxW, pxH);
+    layer.canvas.width = pxW; layer.canvas.height = pxH;
+    layer.ctx = layer.canvas.getContext('2d', { willReadFrequently: true });
+    layer.ctx.setTransform(DPR,0,0,DPR,0,0); // scale so drawing uses CSS pixels
+    layer.ctx.clearRect(0,0,layer.canvas.width, layer.canvas.height);
+    layer.ctx.drawImage(tmp, 0,0, pxW, pxH, 0,0, pxW, pxH);
+  }
+  canvas.width = pxW; canvas.height = pxH;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  redrawAll();
+}
+
+// Create layer (pixel canvas) and set transform so drawing uses CSS pixels
+function createLayer(name='Layer') {
+  const cssW = Math.floor(canvas.clientWidth || wrap.clientWidth);
+  const cssH = Math.floor(canvas.clientHeight || wrap.clientHeight);
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, cssW * DPR);
+  c.height = Math.max(1, cssH * DPR);
+  const cctx = c.getContext('2d', { willReadFrequently: true });
+  cctx.setTransform(DPR,0,0,DPR,0,0); // now draw coordinates use CSS pixels
+  cctx.clearRect(0,0,c.width,c.height);
+  return {
+    canvas: c,
+    ctx: cctx,
+    name,
+    visible:true,
+    opacity:1,
+    blend:'source-over'
+  };
+}
+
+function init() {
+  // ensure at least one layer
+  layers = [ createLayer('Layer 1') ];
+  currentLayer = 0;
+  resizeCanvas();
+  saveHistory(); // initial blank
+  renderLayersPanel();
+}
+window.addEventListener('resize', ()=>{ clearTimeout(window.__resizeTimer); window.__resizeTimer=setTimeout(resizeCanvas,80); });
+
+// Convert hex + alpha to rgba
+function hexToRgba(hex, a=1){
+  if (!hex) return `rgba(0,0,0,${a})`;
+  const h = hex.replace('#','');
+  const full = h.length===3 ? h.split('').map(c=>c+c).join('') : h;
+  const num = parseInt(full,16);
+  const r=(num>>16)&255, g=(num>>8)&255, b=num&255;
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+// Redraw combined layers to main canvas
+function redrawAll(){
+  // fill white background
+  ctx.save();
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.restore();
+  for (let layer of layers){
+    if (!layer.visible) continue;
+    ctx.globalAlpha = layer.opacity;
+    ctx.globalCompositeOperation = layer.blend || 'source-over';
+    // layer.canvas is pixel-sized; draw scaled-down by DPR automatically because ctx has transform
+    ctx.drawImage(layer.canvas, 0,0, layer.canvas.width / DPR, layer.canvas.height / DPR);
+  }
+  ctx.globalAlpha = 1;
+  ctx.globalCompositeOperation = 'source-over';
+}
+
+// Save snapshot for undo/redo
+function saveHistory(){
+  try {
+    // store data URLs (may be memory heavy; cap to MAX_HISTORY)
+    const snap = layers.map(l => l.canvas.toDataURL('image/png'));
+    // if we undid and then draw, drop future states
+    if (historyStep < history.length - 1) history = history.slice(0, historyStep+1);
+    history.push(snap);
+    if (history.length > MAX_HISTORY) history.shift();
+    historyStep = history.length - 1;
+  } catch(e){ console.warn('history save failed', e); }
+}
+
+function undo(){
+  if (historyStep > 0) {
+    historyStep--;
+    applyHistorySnapshot(history[historyStep]);
+  } else showToast('No more undo');
+}
+function redo(){
+  if (historyStep < history.length - 1) {
+    historyStep++;
+    applyHistorySnapshot(history[historyStep]);
+  } else showToast('No more redo');
+}
+function applyHistorySnapshot(snap){
+  if (!snap) return;
+  let loaded = 0;
+  for (let i = 0; i < snap.length; i++){
+    const data = snap[i];
+    const img = new Image();
+    img.onload = (() => {
+      return function(){
+        const l = layers[i];
+        // resize layer canvas if needed
+        l.ctx.clearRect(0,0,l.canvas.width / DPR, l.canvas.height / DPR);
+        // draw image scaled to layer pixel size
+        l.ctx.drawImage(img, 0,0, l.canvas.width / DPR, l.canvas.height / DPR);
+        loaded++;
+        if (loaded === snap.length) redrawAll();
+      }
+    })();
+    img.src = data;
+  }
+}
+
+// Brush texture / style
+function getBrushProfile(brush){
+  switch(brush){
+    case 'pencil': return {alpha:0.9, blur:0, jitter:0};
+    case 'charcoal': return {alpha:0.55, blur:0.6, jitter:0.2};
+    case 'marker': return {alpha:0.92, blur:0.2, jitter:0};
+    case 'oil': return {alpha:0.7, blur:1.0, jitter:0.15};
+    case 'watercolor': return {alpha:0.35, blur:2.0, jitter:0.35};
+    case 'airbrush': return {alpha:0.22, blur:3.0, jitter:0};
+    default: return {alpha:0.9, blur:0, jitter:0};
+  }
+}
+
+// Small smudge implementation: copy a blurred patch and draw over stroke
+function smudgeStroke(layerCtx, from, to, size){
+  // capture a rectangle around from point, blur and draw slightly towards to point
+  const sx = Math.floor(Math.min(from.x, to.x) - size);
+  const sy = Math.floor(Math.min(from.y, to.y) - size);
+  const sw = Math.ceil(Math.abs(to.x - from.x) + size*2);
+  const sh = Math.ceil(Math.abs(to.y - from.y) + size*2);
+  if (sw <=0 || sh <=0) return;
+  try {
+    const tmp = document.createElement('canvas');
+    tmp.width = sw; tmp.height = sh;
+    const tctx = tmp.getContext('2d');
+    // draw portion from layerCtx (layerCtx uses CSS coordinates because transform set)
+    tctx.drawImage(layerCtx.canvas, sx, sy, sw, sh, 0,0, sw, sh);
+    // apply blur via canvas filter
+    tctx.filter = `blur(${Math.max(1, size*0.08)}px)`;
+    const blurred = document.createElement('canvas');
+    blurred.width = sw; blurred.height = sh;
+    const bctx = blurred.getContext('2d');
+    bctx.drawImage(tmp,0,0);
+    // draw blurred at slightly shifted position (towards 'to')
+    const dx = (to.x - from.x) * 0.2;
+    const dy = (to.y - from.y) * 0.2;
+    layerCtx.globalAlpha = 0.9;
+    layerCtx.drawImage(blurred, sx+dx, sy+dy, sw, sh);
+    layerCtx.globalAlpha = 1;
+  } catch(e){ /* ignore heavy operations errors on low memory devices */ }
+}
+
+// draw a segment onto current layer (coordinates are CSS pixels)
+function drawSegment(from, to, pressure){
+  const layer = layers[currentLayer];
+  const lctx = layer.ctx;
+  const profile = getBrushProfile(currentBrush);
+  const p = pressure !== undefined ? pressure : 0.5;
+  const size = Math.max(1, brushSize * (1 + (p-0.5)));
+  lctx.save();
+  lctx.lineCap = 'round';
+  lctx.lineJoin = 'round';
+  lctx.lineWidth = size;
+  lctx.globalAlpha = (isErasing ? 1 : profile.alpha * brushOpacity * brushFlow);
+  lctx.filter = isSmudging ? `blur(${Math.min(6, size*0.08)}px)` : 'none';
+  if (isErasing) {
+    lctx.globalCompositeOperation = 'destination-out';
+    lctx.strokeStyle = `rgba(0,0,0,1)`;
+  } else {
+    lctx.globalCompositeOperation = 'source-over';
+    lctx.strokeStyle = hexToRgba(currentColor, colorAlpha * brushOpacity * brushFlow);
+  }
+  lctx.beginPath();
+  lctx.moveTo(from.x, from.y);
+  lctx.lineTo(to.x, to.y);
+  lctx.stroke();
+  lctx.restore();
+
+  if (isSmudging) {
+    // simple smudge effect
+    try { smudgeStroke(lctx, from, to, size); } catch(e){ }
+  }
+
+  // mirror / radial duplicates (draw directly to layer ctx)
+  if (enableMirror || enableRadial) {
+    if (enableMirror) {
+      const w = canvas.clientWidth;
+      const mx1 = w - from.x;
+      const mx2 = w - to.x;
+      lctx.save();
+      lctx.globalAlpha = (isErasing ? 1 : profile.alpha * brushOpacity * brushFlow);
+      if (isErasing) { lctx.globalCompositeOperation='destination-out'; lctx.strokeStyle='rgba(0,0,0,1)'; }
+      else { lctx.strokeStyle = hexToRgba(currentColor, colorAlpha * brushOpacity * brushFlow); }
+      lctx.beginPath();
+      lctx.moveTo(mx1, from.y);
+      lctx.lineTo(mx2, to.y);
+      lctx.lineWidth = size;
+      lctx.lineCap='round';
+      lctx.stroke();
+      lctx.restore();
+    }
+    if (enableRadial) {
+      const cx = canvas.clientWidth/2;
+      const cy = canvas.clientHeight/2;
+      const seg = 6;
+      const angle = Math.atan2(to.y - cy, to.x - cx);
+      const dist = Math.hypot(to.x - cx, to.y - cy);
+      for (let i=1;i<seg;i++){
+        const a = angle + i * Math.PI*2/seg;
+        const ax = cx + Math.cos(a) * dist;
+        const ay = cy + Math.sin(a) * dist;
+        const la = Math.atan2(from.y - cy, from.x - cx);
+        const ldist = Math.hypot(from.x - cx, from.y - cy);
+        const aFromX = cx + Math.cos(la + i*Math.PI*2/seg) * ldist;
+        const aFromY = cy + Math.sin(la + i*Math.PI*2/seg) * ldist;
+        lctx.save();
+        lctx.globalAlpha = (isErasing ? 1 : profile.alpha * brushOpacity * brushFlow);
+        if (isErasing) { lctx.globalCompositeOperation='destination-out'; lctx.strokeStyle='rgba(0,0,0,1)'; }
+        else { lctx.strokeStyle = hexToRgba(currentColor, colorAlpha * brushOpacity * brushFlow); }
+        lctx.beginPath();
+        lctx.moveTo(aFromX, aFromY);
+        lctx.lineTo(ax, ay);
+        lctx.lineWidth = size;
+        lctx.lineCap='round';
+        lctx.stroke();
+        lctx.restore();
       }
     }
-    function drawStars(){
-      ctx.clearRect(0,0,w,h);
-      // subtle gradient background
-      const g=ctx.createLinearGradient(0,0,0,h);
-      g.addColorStop(0,'#00030a');g.addColorStop(1,'#050517');
-      ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-      // small nebula
-      const ng = ctx.createRadialGradient(w*0.75,h*0.22,10,w*0.75,h*0.22,600);
-      ng.addColorStop(0,'rgba(132,241,255,0.06)');ng.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=ng;ctx.fillRect(0,0,w,h);
+  }
 
-      for(let s of stars){
-        s.alpha += s.dAlpha*(Math.random()>0.5?1:-1);
-        if(s.alpha<0.12) s.alpha=0.12;
-        if(s.alpha>1) s.alpha=1;
-        ctx.beginPath();
-        if(s.glow){
-          // glow
-          const gg = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,12);
-          gg.addColorStop(0,'rgba(255,255,255,'+(0.8*s.alpha)+')');
-          gg.addColorStop(1,'rgba(132,241,255,'+(0.02*s.alpha)+')');
-          ctx.fillStyle=gg;ctx.arc(s.x,s.y,6,0,Math.PI*2);ctx.fill();
-        }
-        ctx.fillStyle='rgba(255,255,255,'+s.alpha+')';
-        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
-      }
-    }
-    function animate(){
-      drawStars();
-      requestAnimationFrame(animate);
-    }
-    onresize = ()=>{w=spaceCanvas.width=innerWidth;h=spaceCanvas.height=innerHeight;initStars();}
-    initStars();animate();
+  // occasional sparkle
+  if (!isErasing && Math.random() < 0.05) createSparkle(to.x, to.y, currentColor);
+}
 
-    // ---------- Play area interactive stars ----------
-    const playArea = document.getElementById('playArea');
-    const foundMsg = document.getElementById('foundMsg');
-    const miniLog = document.getElementById('miniLog');
-    const log = document.getElementById('log');
+// sparkle effect: position in CSS pixels -> place absolute element
+function createSparkle(x, y, color){
+  const rect = canvas.getBoundingClientRect();
+  const el = document.createElement('div');
+  el.className='sparkle';
+  el.style.left = (rect.left + x - 3) + 'px';
+  el.style.top = (rect.top + y - 3) + 'px';
+  el.style.background = color;
+  el.style.boxShadow = `0 0 8px ${color}`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 700);
+}
 
-    function addFloatingStar(x,y,id){
-      const el = document.createElement('div');
-      el.className='floatingStar';
-      el.style.position='absolute';el.style.left=(x-6)+'px';el.style.top=(y-6)+'px';
-      el.style.width='12px';el.style.height='12px';el.style.borderRadius='50%';
-      el.style.boxShadow='0 0 8px 3px rgba(132,241,255,0.12), inset 0 0 6px rgba(255,255,255,0.7)';
-      el.style.cursor='pointer';el.dataset.id=id;
-      playArea.appendChild(el);
-      el.addEventListener('click',()=>{
-        // show found message near star
-        foundMsg.style.left=(x)+'px';foundMsg.style.top=(y)+'px';foundMsg.style.display='block';
-        setTimeout(()=>foundMsg.style.display='none',2200);
-        miniLog.innerText = 'You clicked a glowing star — message sent ❤️';
-        log.innerText = 'You found a star at ('+Math.round(x)+', '+Math.round(y)+')';
-      });
-      // gentle float
-      let dir = Math.random()>0.5?1:-1;let t=0;
-      function float(){t+=0.02;el.style.transform='translateY('+Math.sin(t*2+id)*6+'px)';requestAnimationFrame(float)}
-      float();
-    }
+/* =========================
+   Pointer events (touch + stylus)
+   ========================= */
+function getCanvasCoords(e){
+  const rect = canvas.getBoundingClientRect();
+  // pointer events: e.clientX/Y
+  const x = (e.clientX - rect.left);
+  const y = (e.clientY - rect.top);
+  return { x, y };
+}
 
-    // generate interactive stars
-    function generateInteractiveStars(n=16){
-      // clear old
-      document.querySelectorAll('.floatingStar').forEach(e=>e.remove());
-      for(let i=0;i<n;i++){
-        const x = Math.random()*(playArea.clientWidth-80)+40;
-        const y = Math.random()*(playArea.clientHeight-120)+40;
-        addFloatingStar(x,y,i);
-      }
-    }
-    // initial
-    setTimeout(()=>generateInteractiveStars(18),600);
+canvas.addEventListener('pointerdown', (e) => {
+  if (e.button && e.button !== 0) return; // only left
+  canvas.setPointerCapture && canvas.setPointerCapture(e.pointerId);
+  isDrawing = true;
+  lastPoint = getCanvasCoords(e);
+  // read pressure if available (0..1), fallback to 0.5
+  const pressure = (typeof e.pressure === 'number' && e.pressure > 0) ? e.pressure : (e.pointerType === 'pen' ? 0.7 : 0.6);
+  // begin path -> we store lastPoint and start drawing on move
+  // Save history at start of stroke
+  saveHistory();
+  e.preventDefault();
+});
 
-    // ---------- Love Meter ----------
-    const loveRange = $('#loveRange');
-    const loveVal = $('#loveVal');
-    loveRange.addEventListener('input',()=>{loveVal.innerText = loveRange.value + '%';if(loveRange.value==100){miniLog.innerText='Love Meter at 100%! A special surprise unlocked.';document.getElementById('btnFinal').classList.add('highlight');}}
-    );
+canvas.addEventListener('pointermove', (e) => {
+  if (!isDrawing) return;
+  const p = getCanvasCoords(e);
+  const pressure = (typeof e.pressure === 'number') ? Math.max(0.01, e.pressure) : 0.6;
+  if (lastPoint) {
+    drawSegment(lastPoint, p, pressure);
+    lastPoint = p;
+    // render to main canvas for user feedback
+    redrawAll();
+    // draw active layer only on top can be optimized but this is simpler
+  } else lastPoint = p;
+  e.preventDefault();
+});
 
-    // ---------- Typewriter messages ----------
-    const tw = $('#typewriter');
-    const messages = [
-      "Ria — every star reminds me of you.",
-      "I made this little galaxy just for you.",
-      "Click the stars, answer the quiz, and join me among the constellations.",
-      "When you say 'yes', my universe becomes complete."
-    ];
-    let mi=0;let tpos=0;let typing=true;
-    function startType(){
-      tw.innerText='';tpos=0;typing=true;typeChar();
-    }
-    function typeChar(){
-      if(!typing) return;
-      const cur = messages[mi];
-      if(tpos<=cur.length){tw.innerText = cur.slice(0,tpos);tpos++;setTimeout(typeChar,40+Math.random()*40)}else{typing=false;setTimeout(()=>{mi=(mi+1)%messages.length;typing=true;tpos=0;typeChar()},2200)}
-    }
-    startType();
+canvas.addEventListener('pointerup', (e) => {
+  isDrawing = false;
+  canvas.releasePointerCapture && canvas.releasePointerCapture(e.pointerId);
+  lastPoint = null;
+  // commit snapshot after stroke
+  saveHistory();
+  e.preventDefault();
+});
 
-    // ---------- Mini Quiz ----------
-    const quizQ = $('#quizQ');
-    const quizData = [
-      {q:"Where did we first meet?",opts:["College","Cafe","Online","Under the stars"],a:3},
-      {q:"What is Ria's favorite thing?",opts:["Mountains","Space & Stars","Chocolate","Rain"],a:1},
-      {q:"What do I dream to do with Ria?",opts:["Travel the world","Build a home","Watch a thousand sunsets","All of these"],a:3}
-    ];
-    let qIndex=0;let score=0;
-    $('#btnQuiz').addEventListener('click',()=>{
-      score=0;qIndex=0;renderQ();miniLog.innerText='Quiz started — good luck!';
+canvas.addEventListener('pointercancel', ()=>{ isDrawing=false; lastPoint=null; });
+
+/* =========================
+   UI bindings
+   ========================= */
+// Brush buttons
+document.querySelectorAll('.brush-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.brush-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentBrush = btn.dataset.brush;
+    isErasing = false;
+    document.getElementById('eraserBtn').style.background='';
+  });
+});
+
+// sliders
+sizeRange.addEventListener('input', ()=>{ brushSize = Number(sizeRange.value); sizeVal.textContent = brushSize; });
+opacityRange.addEventListener('input', ()=>{ brushOpacity = Number(opacityRange.value)/100; opVal.textContent = opacityRange.value + '%'; });
+flowRange.addEventListener('input', ()=>{ brushFlow = Number(flowRange.value)/100; flowVal.textContent = flowRange.value + '%'; });
+
+// color UI
+function updateColorUI(){ colorPreview.style.background = currentColor; colorPreview.style.opacity = colorAlpha; colorPicker.value = currentColor; hexInput.value = currentColor; }
+colorPicker.addEventListener('input', ()=>{ currentColor = colorPicker.value; updateColorUI(); });
+hexInput.addEventListener('change', ()=>{ const v = hexInput.value.trim(); if(/^#([0-9A-Fa-f]{6})$/.test(v)){ currentColor=v; updateColorUI(); }});
+colorAlphaInput.addEventListener('input', ()=>{ colorAlpha = Number(colorAlphaInput.value)/255; updateColorUI(); });
+document.querySelectorAll('.sw').forEach(s=> s.addEventListener('click', (ev)=>{ const bg = getComputedStyle(s).backgroundColor; currentColor = rgbToHex(bg); updateColorUI(); }));
+
+function rgbToHex(rgb){
+  const m = rgb.match(/\d+/g);
+  if(!m) return '#000000';
+  const r = parseInt(m[0]).toString(16).padStart(2,'0');
+  const g = parseInt(m[1]).toString(16).padStart(2,'0');
+  const b = parseInt(m[2]).toString(16).padStart(2,'0');
+  return `#${r}${g}${b}`;
+}
+
+// Tools
+document.getElementById('eraserBtn').addEventListener('click', ()=>{
+  isErasing = !isErasing; isSmudging = false;
+  document.getElementById('eraserBtn').style.background = isErasing ? 'rgba(212,175,55,0.3)' : '';
+  document.getElementById('smudgeBtn').style.background = '';
+});
+document.getElementById('smudgeBtn').addEventListener('click', ()=>{
+  isSmudging = !isSmudging; isErasing = false;
+  document.getElementById('smudgeBtn').style.background = isSmudging ? 'rgba(212,175,55,0.3)' : '';
+  document.getElementById('eraserBtn').style.background = '';
+});
+document.getElementById('mirrorBtn').addEventListener('click', ()=>{ enableMirror = !enableMirror; document.getElementById('mirrorBtn').style.background = enableMirror ? 'rgba(212,175,55,0.3)' : ''; });
+document.getElementById('radialBtn').addEventListener('click', ()=>{ enableRadial = !enableRadial; document.getElementById('radialBtn').style.background = enableRadial ? 'rgba(212,175,55,0.3)' : ''; });
+
+document.getElementById('undoBtn').addEventListener('click', undo);
+document.getElementById('redoBtn').addEventListener('click', redo);
+
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  if (!confirm('Clear canvas? This cannot be undone.')) return;
+  for (let l of layers) l.ctx.clearRect(0,0, canvas.clientWidth, canvas.clientHeight);
+  redrawAll();
+  saveHistory();
+});
+
+document.getElementById('downloadBtn').addEventListener('click', ()=>{
+  // merge all layers at pixel resolution
+  const out = document.createElement('canvas');
+  out.width = canvas.width; out.height = canvas.height;
+  const octx = out.getContext('2d');
+  octx.fillStyle = '#ffffff'; octx.fillRect(0,0,out.width,out.height);
+  for (let l of layers){
+    if(!l.visible) continue;
+    octx.globalAlpha = l.opacity;
+    octx.globalCompositeOperation = l.blend || 'source-over';
+    octx.drawImage(l.canvas, 0,0);
+  }
+  const link = document.createElement('a');
+  link.href = out.toDataURL('image/png');
+  link.download = 'priyanshu-ria-drawing.png';
+  link.click();
+});
+
+document.getElementById('addLayerBtn').addEventListener('click', ()=>{
+  const name = `Layer ${layers.length+1}`;
+  const l = createLayer(name);
+  layers.push(l);
+  currentLayer = layers.length - 1;
+  renderLayersPanel();
+  redrawAll();
+  saveHistory();
+});
+
+document.getElementById('mergeBtn').addEventListener('click', ()=>{
+  if (layers.length <= 1) { showToast('Nothing to merge'); return; }
+  // merge top into bottom
+  const base = layers[0];
+  const tmp = document.createElement('canvas'); tmp.width = base.canvas.width; tmp.height = base.canvas.height;
+  const tctx = tmp.getContext('2d');
+  tctx.drawImage(base.canvas,0,0);
+  for (let i=1;i<layers.length;i++){
+    const l = layers[i];
+    tctx.globalAlpha = l.opacity;
+    tctx.drawImage(l.canvas,0,0);
+  }
+  // replace base with merged, keep only base
+  base.ctx.clearRect(0,0, base.canvas.width / DPR, base.canvas.height / DPR);
+  base.ctx.drawImage(tmp,0,0);
+  layers = [ base ];
+  currentLayer = 0;
+  renderLayersPanel();
+  redrawAll();
+  saveHistory();
+});
+
+/* =========================
+   Layer UI rendering and controls
+   ========================= */
+function renderLayersPanel(){
+  layersList.innerHTML = '';
+  for (let i = layers.length - 1; i >= 0; i--){ // show top layer first
+    const l = layers[i];
+    const item = document.createElement('div'); item.className = 'layer-item';
+    if (i === currentLayer) item.classList.add('active');
+    const left = document.createElement('div'); left.style.display='flex'; left.style.alignItems='center'; left.style.gap='8px';
+    const name = document.createElement('div'); name.textContent = l.name; name.style.fontSize='13px';
+    const visBtn = document.createElement('button'); visBtn.className='btn'; visBtn.style.padding='6px'; visBtn.textContent = l.visible ? '👁' : '🚫';
+    visBtn.addEventListener('click', (e)=>{ e.stopPropagation(); l.visible = !l.visible; renderLayersPanel(); redrawAll(); });
+    left.appendChild(visBtn); left.appendChild(name);
+
+    const right = document.createElement('div'); right.className='layer-controls';
+    const up = document.createElement('button'); up.className='btn'; up.textContent='↑';
+    const down = document.createElement('button'); down.className='btn'; down.textContent='↓';
+    const del = document.createElement('button'); del.className='btn'; del.textContent='🗑';
+    const opacity = document.createElement('input'); opacity.type='range'; opacity.min=0; opacity.max=100; opacity.value = Math.round(l.opacity*100);
+    opacity.style.width='80px';
+    opacity.addEventListener('input', (ev)=>{ l.opacity = ev.target.value/100; redrawAll(); });
+
+    up.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const idx = layers.indexOf(l);
+      if (idx < layers.length - 1) { layers.splice(idx,1); layers.splice(idx+1,0,l); currentLayer = layers.indexOf(l); renderLayersPanel(); redrawAll(); saveHistory(); }
     });
-    function renderQ(){
-      const q = quizData[qIndex];
-      quizQ.innerHTML = '<div style="font-weight:700;margin-bottom:8px">Q'+(qIndex+1)+'. '+q.q+'</div>' +
-        q.opts.map((o,i)=>`<button class="btn small" onclick="answer(${i})" style="display:block;margin:6px 0;border-radius:10px;text-align:left">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
-    }
-    window.answer = function(i){
-      const q = quizData[qIndex];
-      if(i===q.a){score++;miniLog.innerText='Nice! Correct.';}else{miniLog.innerText='Oh! That one was tricky.'}
-      qIndex++;
-      if(qIndex<quizData.length){renderQ();}else{quizQ.innerHTML = '<div style="font-weight:700">Quiz complete!</div><div style="margin-top:8px">Score: '+score+' / '+quizData.length+'</div>';
-        log.innerText = 'Quiz finished — score '+score+'/'+quizData.length;
-        if(score>=2){miniLog.innerText='You unlocked the final proposal! Click "Show Final Proposal"';}
-      }
-    }
-
-    // ---------- Launch Rocket ----------
-    // Hyper realistic rocket particles
-    const particleStyle = document.createElement('style');
-    particleStyle.innerHTML = `.flame, .smoke{position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none}
-      .flame{background:linear-gradient(to bottom,#fff7c0,#ffd36b,#ff7a18,#ff3d00);animation:flameF 0.4s linear forwards}
-      .smoke{background:rgba(200,200,200,0.85);animation:smokeF 1.2s linear forwards}
-      @keyframes flameF{to{transform:translateY(30px) scale(0);opacity:0}}
-      @keyframes smokeF{to{transform:translateY(60px) scale(3);opacity:0}}`;
-    document.head.appendChild(particleStyle);
-
-    function spawnParticles(rocketEl){
-      const box = rocketEl.getBoundingClientRect();
-      for(let i=0;i<6;i++){
-        const f=document.createElement('div');f.className='flame';
-        f.style.left=(box.left+box.width/2 + (Math.random()*12-6))+'px';
-        f.style.top=(box.top+box.height)+'px';
-        document.body.appendChild(f);
-        const s=document.createElement('div');s.className='smoke';
-        s.style.left=f.style.left;s.style.top=f.style.top;
-        document.body.appendChild(s);
-        setTimeout(()=>{f.remove();s.remove();},1200);
-      }
-    }
-
-    const rocket = $('#rocket');
-    $('#btnLaunch').addEventListener('click',()=>{
-      rocket.classList.remove('launching');void rocket.offsetWidth;rocket.classList.add('launching');miniLog.innerText='Launching mission to Ria... 🚀';
-      setTimeout(()=>miniLog.innerText='Rocket reached orbit — message delivered to Ria ❤️',2600);
+    down.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const idx = layers.indexOf(l);
+      if (idx > 0) { layers.splice(idx,1); layers.splice(idx-1,0,l); currentLayer = layers.indexOf(l); renderLayersPanel(); redrawAll(); saveHistory(); }
     });
-    rocket.addEventListener('click',()=>{document.getElementById('btnLaunch').click();});
-
-    // ---------- Find Ria's Star ----------
-    $('#btnFindStar').addEventListener('click',()=>{
-      miniLog.innerText='Looking for Ria\'s star...';
-      // animate stars regenerate and highlight one
-      const fs = document.querySelectorAll('.floatingStar');
-      const pick = fs[Math.floor(Math.random()*fs.length)];
-      if(pick){
-        pick.click();
-        const rc = pick.getBoundingClientRect();
-        foundMsg.style.left=(rc.left+rc.width/2)+'px';foundMsg.style.top=(rc.top+rc.height/2)+'px';foundMsg.style.display='block';
-        setTimeout(()=>foundMsg.style.display='none',2200);
-      }
+    del.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      if (!confirm('Delete this layer?')) return;
+      const idx = layers.indexOf(l);
+      layers.splice(idx,1);
+      currentLayer = Math.max(0, idx-1);
+      renderLayersPanel();
+      redrawAll();
+      saveHistory();
     });
 
-    // ---------- Secret Letter (typing 'ria') ----------
-    let keySeq = '';
-    const secret = `My dearest Ria,\n\nFrom the moment I first saw your smile I knew my nights would look different—full of stars and soft light. This little galaxy I built for you has one simple question at its center: will you be my forever?\n\nAll my love,\nPriyanshu ✨`;
-    $('#btnLetter').addEventListener('click',openLetter);
-    document.addEventListener('keydown',(e)=>{
-      keySeq += e.key.toLowerCase(); if(keySeq.length>6) keySeq=keySeq.slice(-6);
-      if(keySeq.includes('ria')){openLetter();keySeq='';}
-    });
-    function openLetter(){
-      $('#secretLetter').innerText = secret;$('#letterModal').classList.add('show');log.innerText='Secret letter opened';miniLog.innerText='A soft letter appears...';
-    }
-    $('#closeLetter').addEventListener('click',()=>{$('#letterModal').classList.remove('show');});
+    right.appendChild(opacity); right.appendChild(up); right.appendChild(down); right.appendChild(del);
 
-    // ---------- Final Proposal ----------
-    const finalModal = $('#finalModal');
-    const finalPoem = $('#finalPoem');
-    const poem = `Ria —\n\nAmong a thousand stars, I chose you.\nEvery little light in this sky whispers your name.\nIf you say yes, I promise to make every night feel like this — warm, bright and ours.\n\nSay you'll be my forever star. 🌟❤️`;
-    $('#btnFinal').addEventListener('click',()=>{finalPoem.innerText = poem;finalModal.classList.add('show');miniLog.innerText='Final scene — your proposal is ready.'});
-    $('#yesBtn').addEventListener('click',()=>{finalModal.querySelector('h2').innerText='She said YES ✨💍';finalModal.querySelector('p').innerText='Thank you, Ria. Welcome to our forever.';miniLog.innerText='SHE SAID YES! Congratulations 🌟';});
-    $('#noBtn').addEventListener('click',()=>{finalModal.classList.remove('show');miniLog.innerText='A playful prank — try again?';});
+    item.appendChild(left); item.appendChild(right);
+    item.addEventListener('click', ()=>{ currentLayer = layers.indexOf(l); renderLayersPanel(); });
 
-    // ---------- Reset ----------
-    $('#btnReset').addEventListener('click',()=>{document.querySelectorAll('.floatingStar').forEach(e=>e.remove());generateInteractiveStars(18);miniLog.innerText='Reset the stars.';log.innerText='Galaxy reset.'});
+    layersList.appendChild(item);
+  }
+}
 
-    // ---------- Small helper: regenerate stars on click area resize ----------
-    let resizeTO;new ResizeObserver(()=>{clearTimeout(resizeTO);resizeTO=setTimeout(()=>generateInteractiveStars(18),200)}).observe(playArea);
+/* =========================
+   Startup
+   ========================= */
+init();
+renderLayersPanel();
+updateColorUI();
 
-    // ---------- Ambient synth (simple) ----------
-    try{
-      const audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-      const master = audioCtx.createGain();master.gain.value=0.07;master.connect(audioCtx.destination);
-      function playNote(freq,dur,when){const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(0.0001,when);g.gain.linearRampToValueAtTime(0.6,when+0.02);g.gain.exponentialRampToValueAtTime(0.001,when+dur);o.connect(g);g.connect(master);o.start(when);o.stop(when+dur+0.02)}
-      function ambient(){const now=audioCtx.currentTime;playNote(220+Math.random()*120,1.6,now);setTimeout(ambient,1800+Math.random()*2200)}
-      // start on user gesture
-      const startAudio = ()=>{if(audioCtx.state!=='running') audioCtx.resume();ambient();document.removeEventListener('click',startAudio)};
-      document.addEventListener('click',startAudio);
-    }catch(e){console.warn('Audio not allowed',e)}
-
-    // ---------- Small startup log ----------
-    miniLog.innerText='Galaxy initialized. Click anywhere to wake the music.';
-
-  </script>
+/* =========================
+   Small helpers
+   ========================= */
+function showToast(msg){ const t = document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),1200); }
+function hexToRgba(hex,a=1){ if(!hex) return `rgba(0,0,0,${a})`; const h=hex.replace('#',''); const fh=h.length===3? h.split('').map(c=>c+c).join(''):h; const n=parseInt(fh,16); const r=(n>>16)&255,g=(n>>8)&255,b=n&255; return `rgba(${r},${g},${b},${a})`; }
+</script>
 </body>
 </html>
