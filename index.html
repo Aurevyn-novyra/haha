@@ -2,593 +2,419 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Ria — Will you be mine?</title>
-  <meta name="description" content="A playful romantic proposal for Ria — tulips, poem, games and a little clumsy poet." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Priyanshu's Galaxy — For Ria ✨</title>
   <style>
     :root{
-      --bg:#07030a;
-      --accent:#ff5ca8;
-      --accent2:#ffb4d9;
-      --gold:#ffd27f;
-      --glass: rgba(255,255,255,0.04);
-      --glass-2: rgba(255,255,255,0.02);
-      --text:#fff;
-      --ui-size:14px;
-      --soft: 14px;
+      --bg:#020414;
+      --accent:#84f1ff;
+      --soft:#9bd3ff;
+      --rose:#ff6b9a;
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.04);
+      --card-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      --radius:18px;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(255,80,160,0.06), transparent),
-                  linear-gradient(180deg,#06020a 0%, #09050f 60%);
-      color:var(--text);
-      overflow-x:hidden;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      -webkit-tap-highlight-color: transparent;
-      touch-action:manipulation;
+    html,body{height:100%;margin:0;background:var(--bg);color:#eaf6ff;overflow:hidden}
+    /* full-canvas star background */
+    #spaceCanvas{position:fixed;inset:0;z-index:0}
+
+    /* center UI */
+    .ui{
+      position:relative;z-index:10;display:grid;grid-template-columns: 430px 1fr;gap:28px;padding:36px;align-items:start;height:100vh;box-sizing:border-box;
     }
 
-    /* breathing site */
-    .breath { animation: breathAnim 6s ease-in-out infinite; }
-    @keyframes breathAnim { 0%{transform:scale(1)}50%{transform:scale(1.005)}100%{transform:scale(1)} }
-
-    header{
-      position:fixed;left:0;right:0;top:0;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:140;
-      backdrop-filter: blur(8px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-bottom:1px solid rgba(255,255,255,0.03);
+    /* left panel */
+    .card{
+      backdrop-filter: blur(8px) saturate(1.05);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);box-shadow:var(--card-shadow);padding:20px;
     }
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(255,80,160,0.12)}
-    .logo svg{width:26px;height:26px}
-    h1{font-size:16px;margin:0}
-    .controls{display:flex;gap:8px;align-items:center}
-    button.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--accent2);cursor:pointer;font-size:var(--ui-size)}
-    button.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));border:0;color:#111;font-weight:700}
+    header h1{font-size:20px;margin:0 0 6px 0}
+    header p{margin:0;color:rgba(255,255,255,0.65);font-size:13px}
 
-    main{padding-top:92px;padding-bottom:120px}
-    .container{max-width:1100px;margin:20px auto;padding:18px}
+    .logo{display:flex;gap:12px;align-items:center}
+    .logo .badge{width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--rose));display:flex;align-items:center;justify-content:center;font-weight:700}
 
-    .hero{display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:start}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:20px;box-shadow: 0 10px 50px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-    .lead{font-size:24px;line-height:1.06;color:#fff;margin-bottom:8px}
-    .sub{color:rgba(255,255,255,0.6);margin-bottom:14px}
+    /* game buttons */
+    .controls{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+    .btn{background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:12px;cursor:pointer;font-weight:600}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .small{padding:8px 10px;font-size:14px}
 
-    .poem-wrap{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);min-height:180px;position:relative}
-    .poem{white-space:pre-wrap;font-family: 'Segoe UI', 'Times New Roman', Georgia, serif;font-size:16px;color:var(--accent2);line-height:1.5}
+    /* right area */
+    .stage{height:calc(100vh - 72px);display:flex;flex-direction:column;gap:14px}
+    .panel{flex:1;border-radius:16px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);box-shadow:var(--card-shadow);overflow:auto}
 
-    .panel{padding:10px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);margin-bottom:12px}
+    /* starfield area */
+    #starfield{position:relative;height:100%;display:flex;align-items:center;justify-content:center}
+    #playArea{width:100%;height:100%;position:relative}
 
-    .games{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .game{min-height:140px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+    /* messages */
+    .messageBox{position:absolute;left:20px;bottom:20px;padding:12px 14px;border-radius:12px;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.35));border:1px solid rgba(255,255,255,0.04)}
 
-    .hearts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-    .heart{width:64px;height:64px;border-radius:14px;background:linear-gradient(180deg,#fff3,#fff1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .22s}
-    .heart svg{width:36px;height:36px;filter:drop-shadow(0 6px 12px rgba(255,70,140,0.16));}
-    .heart:hover{transform:translateY(-6px) rotate(-4deg);}
+    /* love meter */
+    .meterWrap{display:flex;align-items:center;gap:12px}
+    input[type=range]{width:100%}
+    .meterVal{min-width:60px;text-align:center}
 
-    .tulip-area{position:relative;overflow:hidden;height:200px;border-radius:12px}
-    .tulip{position:absolute;width:84px;height:120px;cursor:pointer;touch-action:none}
+    /* quiz */
+    .quiz qItem{display:block}
+    .quiz .opt{display:block;margin:8px 0}
 
-    .meter{display:flex;gap:8px;align-items:center}
-    .meter .bar{height:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));width:200px;overflow:hidden}
-    .meter .fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:10px;transition:width 1.4s cubic-bezier(.2,.9,.2,1)}
-    .meter input{padding:8px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff;font-size:var(--ui-size)}
+    /* rocket */
+    .rocket{position:absolute;right:40px;bottom:40px;width:84px;height:84px;transform-origin:50% 100%;transition:transform 1.2s cubic-bezier(.2,.9,.3,1)}
+    .rocket svg{width:100%;height:100%}
+    .launching{animation:launch 2.6s ease forwards}
+    @keyframes launch{0%{transform:translateY(0) scale(1) rotate(0)}60%{transform:translateY(-48vh) scale(1.05) rotate(4deg)}100%{transform:translateY(-120vh) scale(0.6) rotate(10deg);opacity:0}}
 
-    .puzzle{display:flex;gap:8px}
-    .puzzle button{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff;cursor:pointer}
+    /* typewriter */
+    .typewriter{font-family:monospace;background:transparent;border-left:2px solid rgba(255,255,255,0.08);padding-left:8px}
 
-    .mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .wheel{display:flex;align-items:center;justify-content:center;flex-direction:column}
-    .wheel-canvas{width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.02), transparent);display:flex;align-items:center;justify-content:center;font-size:36px}
+    /* final modal */
+    .finalModal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.85));z-index:40;backdrop-filter: blur(6px);visibility:hidden;opacity:0;transition:opacity .35s}
+    .finalModal.show{visibility:visible;opacity:1}
+    .finalCard{width:720px;max-width:94%;padding:28px;border-radius:20px;background:linear-gradient(180deg, rgba(8,6,20,0.9), rgba(12,8,30,0.95));border:1px solid rgba(255,255,255,0.04);text-align:center}
+    .finalCard h2{font-size:28px;margin-bottom:8px}
+    .finalCard p{color:rgba(255,255,255,0.78);line-height:1.4}
+    .final-actions{display:flex;gap:12px;justify-content:center;margin-top:18px}
+    .final-actions .btn{padding:12px 18px;border-radius:12px}
 
-    .memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-    .card{background:var(--glass-2);height:68px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;user-select:none}
-
-    .proposal-modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(2,1,6,0.6);backdrop-filter: blur(5px);z-index:120;opacity:0;pointer-events:none;transition:opacity .3s}
-    .proposal-modal.show{opacity:1;pointer-events:auto}
-    .proposal-card{width:920px;max-width:95%;border-radius:20px;padding:24px;background:linear-gradient(180deg, rgba(10,6,12,0.95), rgba(8,4,10,0.95));border:1px solid rgba(255,255,255,0.03);text-align:center}
-    .proposal-card h2{font-size:30px;margin-bottom:12px}
-    .proposal-actions{display:flex;gap:12px;justify-content:center;margin-top:18px}
-    .big-btn{padding:12px 16px;border-radius:12px;border:0;font-size:16px}
-    .yes{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#111}
-    .no{background:transparent;border:1px solid rgba(255,255,255,0.06)}
-
-    #petal-canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:2}
-
-    /* Secret garden (hidden area) */
-    .secret-garden{height:0;overflow:hidden;transition:height .9s ease; border-radius:12px; margin-top:18px; padding:0 12px}
-    .secret-garden.open{height:260px; padding:12px;}
-
-    /* promise jar */
-    .jar{width:120px;height:160px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:12px;position:relative}
-    .promise{background:rgba(255,255,255,0.06);padding:6px 8px;border-radius:8px;margin-bottom:6px;font-size:13px;color:var(--text);width:88%;text-align:center}
-
-    /* invisible string animation */
-    .string-line{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:50}
-    .string-dot{position:absolute;width:8px;height:8px;border-radius:50%;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 6px 18px rgba(255,80,160,0.12)}
-
-    /* virtual hug shimmer */
-    .hug-area{display:flex;align-items:center;gap:12px;justify-content:center;padding:12px;border-radius:12px}
-
-    /* stargazing overlay */
-    .stars-overlay{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:30;opacity:0;transition:opacity .6s}
-    .stars-overlay.on{opacity:1}
-
-    footer{margin-top:24px;text-align:center;color:rgba(255,255,255,0.35);font-size:13px}
-
-    /* simple handwriting style for poem lines reveal */
-    .handwrite{font-family: 'Segoe Script', "Comic Sans MS", "Bradley Hand", cursive; font-size:18px; color:var(--accent2)}
-
-    /* Ria pulse */
-    @keyframes riaPulse { 0% { filter: hue-rotate(0deg) brightness(1); } 50% { filter: hue-rotate(-10deg) brightness(1.06); } 100% { filter: hue-rotate(0deg) brightness(1); } }
-
-    /* small screen tweaks */
-    @media (max-width:920px){
-      .hero{grid-template-columns:1fr;}
-      .hero-card{padding:16px}
-      .lead{font-size:20px}
-      .poem-wrap{min-height:160px}
-      .games{grid-template-columns:1fr}
-      .mini{grid-template-columns:1fr}
-      .memory-grid{grid-template-columns:repeat(3,1fr)}
-      :root{--ui-size:15px}
-    }
-    @media (max-width:520px){
-      header{height:64px;padding:0 12px}
-      .logo{width:44px;height:44px}
-      .lead{font-size:18px}
-      .poem{font-size:15px}
-      .heart{width:56px;height:56px}
-      .tulip{width:74px;height:104px}
-      .card{height:56px}
-      :root{--ui-size:16px}
+    /* responsive */
+    @media (max-width:980px){
+      .ui{grid-template-columns:1fr;padding:18px;gap:12px}
+      .logo .badge{width:44px;height:44px}
+      .rocket{display:none}
     }
 
-    /* simple handwriting style for poem lines reveal */
-    .handwrite{font-family: 'Segoe Script', "Comic Sans MS", "Bradley Hand", cursive; font-size:18px; color:var(--accent2)}
-
-    /* small achievement badge */
-    .badge{position:fixed;left:18px;top:90px;background:linear-gradient(90deg,var(--accent),var(--accent2));padding:8px 12px;border-radius:10px;color:#111;z-index:999999;font-weight:700}
-
-    /* catch-heart game overlay */
-    .catch-overlay{position:fixed;inset:0;z-index:99999;pointer-events:none}
-    .catch-heart{position:fixed;width:48px;height:48px;pointer-events:auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px}
-
-    /* small glitch */
-    .glitch{animation: glitchAnim 300ms steps(2,end) infinite;}
-    @keyframes glitchAnim { 0%{transform:translate(0,0) skew(0);} 50%{transform:translate(-6px,2px) skew(-2deg);} 100%{transform:translate(0,0) skew(0);} }
-
+    /* fun little twinkle on found star */
+    .foundStar{position:absolute;padding:8px 12px;background:linear-gradient(90deg,var(--accent),var(--rose));border-radius:999px;color:#051017;font-weight:700;font-size:13px;transform:translate(-50%,-160%);pointer-events:none}
   </style>
 </head>
-<body class="breath">
-  <canvas id="petal-canvas" aria-hidden="true"></canvas>
-  <div class="string-line" id="string-line" aria-hidden="true"></div>
-  <div class="stars-overlay" id="stars-overlay" aria-hidden="true"></div>
+<body>
+  <canvas id="spaceCanvas"></canvas>
 
-  <header>
-    <div class="brand">
-      <div class="logo" aria-hidden>
-        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32 6c6.6 0 12 5.4 12 12 0 6.6-12 20-12 20s-12-13.4-12-20c0-6.6 5.4-12 12-12z" fill="#fff" opacity=".92"/></svg>
-      </div>
-      <div>
-        <h1>Ria — a misprinted bouquet</h1>
-        <div style="color:rgba(255,255,255,0.5);font-size:12px">A playful romantic proposal by Priyanshu</div>
-      </div>
-    </div>
-    <div class="controls">
-      <button class="btn" id="play-music">Play music</button>
-      <button class="btn" id="toggle-stars">Stars</button>
-      <button class="btn" id="open-propose">Propose</button>
-    </div>
-  </header>
-
-  <main>
-    <div class="container">
-      <section class="hero">
-        <div class="hero-card">
-          <div class="lead">Ria — will you walk through this misprinted sky with me?</div>
-          <div class="sub">A playful, romantic little world made of tulips, stars, and a clumsy poet.</div>
-
-          <div class="poem-wrap panel" aria-live="polite">
-            <div class="poem" id="poem"></div>
-            <div style="margin-top:10px;font-size:13px;color:rgba(255,255,255,0.55)">Tip: double-tap the poem to reveal the proposal.</div>
-          </div>
-
-          <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;align-items:flex-start">
-            <div class="panel" style="flex:1;min-width:220px">
-              <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px">Quick games & toys</div>
-              <div class="games">
-
-                <div class="game panel">
-                  <strong style="display:block;margin-bottom:8px">Find My Heart</strong>
-                  <div class="hearts" id="hearts"></div>
-                </div>
-
-                <div class="game panel">
-                  <strong style="display:block;margin-bottom:8px">Catch the Tulip</strong>
-                  <div class="tulip-area" id="tulip-area">
-                    <svg class="tulip" id="moving-tulip" viewBox="0 0 64 96" xmlns="http://www.w3.org/2000/svg">
-                      <g>
-                        <path d="M32 10c10 0 18 8 18 18 0 10-18 30-18 30s-18-20-18-30c0-10 8-18 18-18z" fill="#ff5ca8"/>
-                        <path d="M40 56c0 12-16 20-16 20s-16-8-16-20c0-3 16-4 16-4s16 1 16 4z" fill="#5b8c3a"/>
-                      </g>
-                    </svg>
-                  </div>
-                </div>
-
-                <div class="game panel">
-                  <strong style="display:block;margin-bottom:8px">Compatibility Meter</strong>
-                  <div style="display:flex;gap:8px;align-items:center">
-                    <input id="name-input" placeholder="Type Ria's name" />
-                    <button class="btn" id="calc-compat">Calculate</button>
-                  </div>
-                  <div style="margin-top:8px" class="meter">
-                    <div class="bar"><div class="fill" id="compat-fill"></div></div>
-                    <div id="compat-percent">--%</div>
-                  </div>
-                </div>
-
-                <div class="game panel">
-                  <strong style="display:block;margin-bottom:8px">Unlock My Heart</strong>
-                  <div class="puzzle">
-                    <button data-key="smile">Smile</button>
-                    <button data-key="eyes">Eyes</button>
-                    <button data-key="heart">Heart</button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="panel" style="width:320px;min-width:220px;">
-              <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px">More fun</div>
-              <div class="mini">
-                <div class="panel wheel">
-                  <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px">Spin the Tulip</div>
-                  <div class="wheel-canvas" id="wheel">🌷</div>
-                  <button class="btn" id="spin-wheel" style="margin-top:8px">Spin</button>
-                </div>
-                <div class="panel">
-                  <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:8px">Memory Match</div>
-                  <div class="memory-grid" id="memory-grid"></div>
-                  <button class="btn" id="reset-memory" style="margin-top:8px">Reset</button>
-                </div>
-
-                <div class="panel" style="grid-column:1/3;text-align:center;margin-top:6px">
-                  <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap">
-                    <div class="hug-area">
-                      <button class="btn" id="virtual-hug">Tap for a Hug 🤗</button>
-                      <button class="btn" id="hold-hand">Hold my hand (long-press)</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="panel" style="grid-column:1/3;margin-top:6px">
-                  <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap">
-                    <div style="flex:1">
-                      <div style="font-size:12px;color:rgba(255,255,255,0.6)">Secret unlock</div>
-                      <input id="secret-input" placeholder="type secret (try tulip)" style="width:100%;margin-top:6px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#fff"/>
-                    </div>
-                    <div style="width:10px"></div>
-                    <div style="width:150px">
-                      <div style="font-size:12px;color:rgba(255,255,255,0.6)">Smile test</div>
-                      <button class="btn" id="smile-test" style="width:100%;margin-top:6px">Did you smile?</button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
+  <div class="ui">
+    <div class="card">
+      <div class="logo">
+        <div class="badge">P</div>
+        <div>
+          <header>
+            <h1>Priyanshu's Galaxy</h1>
+            <p>For Ria — a starry cinematic proposal</p>
+          </header>
+          <div style="margin-top:10px;font-size:13px;color:rgba(255,255,255,0.7)">Tip: Type <strong>ria</strong> anywhere to reveal a secret letter ✨</div>
         </div>
+      </div>
 
-        <aside class="hero-card panel" aria-hidden>
-          <div style="text-align:center;margin-bottom:10px">
-            <h3 style="margin:0;font-size:18px;">A little tulip garden</h3>
-            <div style="color:rgba(255,255,255,0.6);font-size:12px">For Ria — every petal for you</div>
-          </div>
+      <div class="controls">
+        <button class="btn" id="btnFindStar">Find Ria's Star ⭐</button>
+        <button class="btn" id="btnQuiz">Mini Quiz: About Ria</button>
+        <button class="btn" id="btnLaunch">Mission to Ria (Launch Rocket)</button>
+        <button class="btn ghost small" id="btnLetter">Open Secret Letter</button>
+      </div>
 
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
-            <div class="panel" style="text-align:center">
-              <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:8px">Tulip Trail</div>
-              <div style="font-size:22px;font-weight:700;color:var(--accent)">🌷</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:8px">Petals follow the touch</div>
-            </div>
-            <div class="panel" style="text-align:center">
-              <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:8px">Promise Jar</div>
-              <div style="display:flex;justify-content:center;margin-top:6px"><div class="jar" id="jar"><div id="jar-promises"></div></div></div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:8px">Tap the jar to reveal promises</div>
-            </div>
-            <div class="panel" style="text-align:center">
-              <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:8px">Secret Garden</div>
-              <div style="font-size:22px;font-weight:700;color:var(--gold)">🌿</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:8px">Scroll down / type secret to open</div>
-            </div>
-          </div>
+      <div style="margin-top:16px">
+        <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-bottom:8px">Love Meter</div>
+        <div class="meterWrap">
+          <input type="range" id="loveRange" min="0" max="100" value="70">
+          <div class="meterVal" id="loveVal">70%</div>
+        </div>
+      </div>
 
-          <div class="secret-garden" id="secret-garden">
-            <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
-              <div style="flex:1">
-                <h4 style="margin:0">A secret corner</h4>
-                <p style="margin-top:6px;color:rgba(255,255,255,0.7)">Not everyone gets to see this. This page is our little secret — a small garden where soft things live.</p>
-              </div>
-              <div style="width:220px;text-align:center">
-                <img src="" alt="" style="width:160px;height:100px;object-fit:cover;border-radius:8px;opacity:0.05"/>
-                <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-top:8px">(private space)</div>
-              </div>
-            </div>
-          </div>
+      <div style="margin-top:14px;font-size:13px;color:rgba(255,255,255,0.75)">
+        <div><strong>Short Tasks</strong></div>
+        <ul style="margin:8px 0 0 20px;color:rgba(255,255,255,0.7)">
+          <li>Click a glowing star to leave a message</li>
+          <li>Answer quiz to unlock final scene</li>
+          <li>Drag the love meter to 100% for a surprise</li>
+        </ul>
+      </div>
 
-        </aside>
-      </section>
+      <div style="margin-top:18px;font-size:12px;color:rgba(255,255,255,0.6)">Made with ♥ by Priyanshu — Customize the poem inside the secret letter.</div>
 
-      <section style="margin-top:22px">
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <div class="panel" style="flex:1;min-width:260px">
-            <h4 style="margin:0 0 8px 0">Stargazing & Modes</h4>
-            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-              <button class="btn" id="toggle-garden">Tulip Garden Mode</button>
-              <button class="btn" id="toggle-moon">Moonlight Mode</button>
-              <button class="btn" id="heartbeat-toggle">Heartbeat Mode</button>
-            </div>
-          </div>
+    </div>
 
-          <div class="panel" style="width:300px;min-width:220px">
-            <h4 style="margin:0 0 8px 0">Typing from my heart</h4>
-            <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:6px">Tap to see line-by-line reveal</div>
-            <button class="btn" id="reveal-line">Reveal a line</button>
-            <div style="margin-top:10px" id="typed-live" class="handwrite"></div>
+    <div class="stage">
+      <div class="panel" id="starfield">
+        <div id="playArea">
+          <!-- dynamic stars overlayed -->
+          <div class="messageBox" id="log">Welcome, Priyanshu. Guide Ria through the stars ✨</div>
+          <div id="foundMsg" class="foundStar" style="display:none">You found my heart ❤️</div>
+          <div class="rocket" id="rocket" title="Launch to Ria">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g>
+                <path d="M32 2c0 0-10 8-14 18-3 8 2 18 2 18s10-3 18-11S32 2 32 2z" fill="url(#g1)" />
+                <path d="M25 42c-2 5 2 8 2 8s5 1 10-6c-6 0-10-2-12-2z" fill="#ffb3c7" />
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1">
+                    <stop offset="0" stop-color="#84f1ff" />
+                    <stop offset="1" stop-color="#ff6b9a" />
+                  </linearGradient>
+                </defs>
+              </g>
+            </svg>
           </div>
         </div>
-      </section>
+      </div>
 
-      <footer>
-        <div>Made with clumsy words, tulips & a little astronomy.</div>
-      </footer>
-    </div>
-  </main>
+      <div class="panel" style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
+          <div class="typewriter" id="typewriter">Loading message...</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn small" id="btnFinal">Show Final Proposal</button>
+            <button class="btn small ghost" id="btnReset">Reset</button>
+          </div>
+        </div>
 
-  <div class="proposal-modal" id="proposal-modal" role="dialog" aria-modal="true">
-    <div class="proposal-card">
-      <h2 id="proposal-title">Ria… will you be my forever?</h2>
-      <p id="proposal-poem" style="color:rgba(255,255,255,0.78);max-width:720px;margin:0 auto">I wrote a small thing for you.</p>
-      <div class="proposal-actions">
-        <button class="big-btn yes" id="yes-btn">Yes</button>
-        <button class="big-btn no" id="no-btn">No</button>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="flex:1">
+            <div style="font-size:14px;margin-bottom:8px">Mini Quiz</div>
+            <div id="quizArea" style="background:var(--glass);padding:12px;border-radius:10px;min-height:120px">
+              <div id="quizQ">Press "Mini Quiz" to start</div>
+            </div>
+          </div>
+
+          <div style="width:220px">
+            <div style="font-size:14px;margin-bottom:8px">Short Log</div>
+            <div style="background:var(--glass-2);padding:10px;border-radius:10px;min-height:120px;font-size:13px;color:rgba(255,255,255,0.8)" id="miniLog">
+              Actions will appear here
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- achievement badge -->
-  <div id="achievement-badge" class="badge" style="display:none">🏅 Achievement</div>
+  <!-- final modal -->
+  <div class="finalModal" id="finalModal">
+    <div class="finalCard">
+      <h2>Ria, will you be my forever star?</h2>
+      <p id="finalPoem"> </p>
+      <div class="final-actions">
+        <button class="btn" id="yesBtn">Yes — I'll be yours ✨</button>
+        <button class="btn ghost" id="noBtn">Wait... (prank)</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- catch heart overlay container -->
-  <div id="catch-overlay" class="catch-overlay"></div>
+  <!-- secret letter modal -->
+  <div class="finalModal" id="letterModal">
+    <div class="finalCard">
+      <h2>A secret letter for Ria</h2>
+      <p style="text-align:left;white-space:pre-wrap;color:rgba(255,255,255,0.85)" id="secretLetter">
+
+      </p>
+      <div style="margin-top:16px;text-align:center">
+        <button class="btn" id="closeLetter">Close</button>
+      </div>
+    </div>
+  </div>
 
   <script>
-  (function(){
-    /* ------------------ Original poem & typewriter ------------------ */
-    const poemText = `Sometimes I think I fell for you
-before I even learned how falling works.
-My words trip over themselves..
-And as I said earlier.. you're like a Luminous Singularity
-which's parallel yet coincidently intersecting...
-Like constellations shuffled in a hurry...
-Orion losing its belt..
-Cassiopeia sitting upside down..
-and whole sky is asking "Why is she the only one shining this bright?"
-And I swear ... 
-every time i try to explain what you mean to me.. I fumble..I'm scared...
-and my heart chooses Your tulips instead of sentences 
-petals arranged in a wrong order.. yet beautiful..
-Colors mixing where they shouldn't yet somehow looking eternal..
-and it's strange how You make the universe feel like a misprinted bouquet..
-Galaxies scribbled over with your name..
-planets orbiting a little too close..
-a pull like the Black hole..
-Like they too forgot their distance.
-And me? I'm jst a boy holding a bouquet thinking maybe if I say it wrong enough times
-you Might hear the truth hidden between the mistakes
-That in every star's cold shimmer and every tulip's quite softness
-i keep finding you 
-not perfectly..
-not clearly 
-but completely...`;
+    // ---------- Utilities ----------
+    const $ = (s) => document.querySelector(s);
+    const spaceCanvas = $('#spaceCanvas');
+    const ctx = spaceCanvas.getContext('2d');
+    let w=spaceCanvas.width=innerWidth, h=spaceCanvas.height=innerHeight;
 
-    // Typewriter poem
-    const poemEl = document.getElementById('poem');
-    let idx = 0; const speed = 14;
-    (function typePoem(){ if(idx <= poemText.length){ poemEl.textContent = poemText.slice(0, idx); idx++; setTimeout(typePoem, speed); } })();
+    // ---------- Starfield with twinkle ----------
+    const stars = [];
+    function rand(a,b){return a+Math.random()*(b-a)}
+    function initStars(){
+      stars.length=0;
+      const count = Math.round((w*h)/6000);
+      for(let i=0;i<count;i++){
+        stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.6+0.2,alpha:Math.random(),dAlpha:Math.random()*0.02+0.002,glow:Math.random()>0.96?true:false})
+      }
+    }
+    function drawStars(){
+      ctx.clearRect(0,0,w,h);
+      // subtle gradient background
+      const g=ctx.createLinearGradient(0,0,0,h);
+      g.addColorStop(0,'#00030a');g.addColorStop(1,'#050517');
+      ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+      // small nebula
+      const ng = ctx.createRadialGradient(w*0.75,h*0.22,10,w*0.75,h*0.22,600);
+      ng.addColorStop(0,'rgba(132,241,255,0.06)');ng.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=ng;ctx.fillRect(0,0,w,h);
 
-    // Live typing lines (Reveal)
-    const typedLive = document.getElementById('typed-live');
-    const lines = poemText.split('\n').filter(Boolean);
-    let revealIndex = 0;
-    document.getElementById('reveal-line').addEventListener('click', ()=> { if(revealIndex < lines.length){ const line = lines[revealIndex]; const p = document.createElement('div'); p.textContent = line; p.style.marginBottom='6px'; typedLive.appendChild(p); revealIndex++; } else { showToast('All lines revealed 🙂'); } }, {passive:true});
+      for(let s of stars){
+        s.alpha += s.dAlpha*(Math.random()>0.5?1:-1);
+        if(s.alpha<0.12) s.alpha=0.12;
+        if(s.alpha>1) s.alpha=1;
+        ctx.beginPath();
+        if(s.glow){
+          // glow
+          const gg = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,12);
+          gg.addColorStop(0,'rgba(255,255,255,'+(0.8*s.alpha)+')');
+          gg.addColorStop(1,'rgba(132,241,255,'+(0.02*s.alpha)+')');
+          ctx.fillStyle=gg;ctx.arc(s.x,s.y,6,0,Math.PI*2);ctx.fill();
+        }
+        ctx.fillStyle='rgba(255,255,255,'+s.alpha+')';
+        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+      }
+    }
+    function animate(){
+      drawStars();
+      requestAnimationFrame(animate);
+    }
+    onresize = ()=>{w=spaceCanvas.width=innerWidth;h=spaceCanvas.height=innerHeight;initStars();}
+    initStars();animate();
 
-    /* ------------------ Canvas petals (preserved) ------------------ */
-    const canvas = document.getElementById('petal-canvas');
-    const ctx = canvas.getContext('2d');
-    let DPR = Math.max(1, window.devicePixelRatio || 1);
-    function resizeCanvas(){ DPR = Math.max(1, window.devicePixelRatio || 1); canvas.style.width = window.innerWidth + 'px'; canvas.style.height = window.innerHeight + 'px'; canvas.width = Math.round(window.innerWidth * DPR); canvas.height = Math.round(window.innerHeight * DPR); ctx.setTransform(DPR, 0, 0, DPR, 0, 0); }
-    window.addEventListener('resize', resizeCanvas, {passive:true}); resizeCanvas();
+    // ---------- Play area interactive stars ----------
+    const playArea = document.getElementById('playArea');
+    const foundMsg = document.getElementById('foundMsg');
+    const miniLog = document.getElementById('miniLog');
+    const log = document.getElementById('log');
 
-    function rand(a,b){ return a + Math.random()*(b-a); }
-    const petals = [];
-    function spawnPetal(x,y,force){ const p = { x: x !== undefined ? x : rand(0, window.innerWidth), y: y !== undefined ? y : rand(-window.innerHeight, window.innerHeight), vx: rand(-0.6,0.6) * (force || 1), vy: rand(0.2,1.6) * (force || 1), r: rand(6,14), rot: rand(0,Math.PI*2), vr: rand(-0.02,0.02), col: `rgba(255,${120+Math.floor(rand(0,120))},${160+Math.floor(rand(0,80))},${0.95})` }; petals.push(p); if(petals.length > 250) petals.splice(0, 30); }
-    for(let i=0;i<80;i++) spawnPetal();
-    function drawPetal(p){ ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.beginPath(); ctx.ellipse(0,0, p.r*0.7, p.r, 0, 0, Math.PI*2); ctx.fillStyle = p.col; ctx.fill(); ctx.restore(); }
-    function updatePetals(){ ctx.clearRect(0, 0, window.innerWidth, window.innerHeight); for(let i=0;i<petals.length;i++){ const p = petals[i]; p.x += p.vx; p.y += p.vy; p.rot += p.vr; if(p.y > window.innerHeight + 50){ p.y = -40; p.x = rand(0, window.innerWidth); } drawPetal(p); } requestAnimationFrame(updatePetals); }
-    updatePetals();
-    window.addEventListener('mousemove', (e) => { for(let i=0;i<2;i++) spawnPetal(e.clientX + rand(-12,12), e.clientY + rand(-12,12), 0.6); });
-    let lastTouch = 0;
-    window.addEventListener('touchmove', (ev) => { const t = ev.touches[0]; if(!t) return; const now = Date.now(); if(now - lastTouch > 25){ for(let i=0;i<4;i++) spawnPetal(t.clientX + rand(-18,18), t.clientY + rand(-18,18), 0.9); lastTouch = now; } }, {passive:true});
+    function addFloatingStar(x,y,id){
+      const el = document.createElement('div');
+      el.className='floatingStar';
+      el.style.position='absolute';el.style.left=(x-6)+'px';el.style.top=(y-6)+'px';
+      el.style.width='12px';el.style.height='12px';el.style.borderRadius='50%';
+      el.style.boxShadow='0 0 8px 3px rgba(132,241,255,0.12), inset 0 0 6px rgba(255,255,255,0.7)';
+      el.style.cursor='pointer';el.dataset.id=id;
+      playArea.appendChild(el);
+      el.addEventListener('click',()=>{
+        // show found message near star
+        foundMsg.style.left=(x)+'px';foundMsg.style.top=(y)+'px';foundMsg.style.display='block';
+        setTimeout(()=>foundMsg.style.display='none',2200);
+        miniLog.innerText = 'You clicked a glowing star — message sent ❤️';
+        log.innerText = 'You found a star at ('+Math.round(x)+', '+Math.round(y)+')';
+      });
+      // gentle float
+      let dir = Math.random()>0.5?1:-1;let t=0;
+      function float(){t+=0.02;el.style.transform='translateY('+Math.sin(t*2+id)*6+'px)';requestAnimationFrame(float)}
+      float();
+    }
 
-    /* ------------------ Hearts game (preserved) ------------------ */
-    const heartsEl = document.getElementById('hearts');
-    function makeHearts(){ heartsEl.innerHTML = ''; const count = 8; const correct = Math.floor(Math.random() * count); for(let i=0;i<count;i++){ const d = document.createElement('div'); d.className = 'heart'; d.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 21s-8-4.8-8-10.3S8.1 3 12 6.2 20 3 20 10.7 12 21 12 21z" fill="${i===correct ? '#ff5ca8' : '#ffffff'}" /></svg>`; heartsEl.appendChild(d); (function(index, el){ el.addEventListener('click', () => { if(index === correct){ showToast("You found my heart ❤️"); celebrateAtElement(el); unlockAchievement('found-heart'); } else { showToast("Not this one — try again ☺️"); el.animate([{transform:'translateY(0)'},{transform:'translateY(-10px) rotate(-6deg)'},{transform:'translateY(0)'}], {duration:420}); } }, {passive:true}); })(i, d); } }
-    makeHearts();
-    function celebrateAtElement(el){ const rect = el.getBoundingClientRect(); for(let i=0;i<16;i++){ const p = document.createElement('div'); p.style.position = 'fixed'; p.style.left = (rect.left + rect.width/2) + 'px'; p.style.top = (rect.top + rect.height/2) + 'px'; p.style.width = '8px'; p.style.height = '8px'; p.style.borderRadius = '4px'; p.style.background = (i%2) ? 'rgba(255,100,160,0.95)' : 'rgba(255,190,220,0.95)'; p.style.zIndex = 999999; p.style.pointerEvents = 'none'; document.body.appendChild(p); const dx = (Math.random() - 0.5) * 140; const dy = (Math.random() - 0.9) * 140; p.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: `translate(${dx}px,${dy}px) scale(0.2)`, opacity: 0 }], { duration: 700 + Math.random()*400, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = () => p.remove(); } }
+    // generate interactive stars
+    function generateInteractiveStars(n=16){
+      // clear old
+      document.querySelectorAll('.floatingStar').forEach(e=>e.remove());
+      for(let i=0;i<n;i++){
+        const x = Math.random()*(playArea.clientWidth-80)+40;
+        const y = Math.random()*(playArea.clientHeight-120)+40;
+        addFloatingStar(x,y,i);
+      }
+    }
+    // initial
+    setTimeout(()=>generateInteractiveStars(18),600);
 
-    /* ------------------ Tulip mover (preserved) ------------------ */
-    const tulip = document.getElementById('moving-tulip');
-    let tx = 50, ty = 50, tvx = 1.6, tvy = 0.8;
-    function moveTulip(){ tx += tvx; ty += tvy; if(tx < 8 || tx > 92) tvx *= -1; if(ty < 12 || ty > 82) tvy *= -1; tulip.style.left = tx + '%'; tulip.style.top = ty + '%'; requestAnimationFrame(moveTulip); }
-    moveTulip();
+    // ---------- Love Meter ----------
+    const loveRange = $('#loveRange');
+    const loveVal = $('#loveVal');
+    loveRange.addEventListener('input',()=>{loveVal.innerText = loveRange.value + '%';if(loveRange.value==100){miniLog.innerText='Love Meter at 100%! A special surprise unlocked.';document.getElementById('btnFinal').classList.add('highlight');}}
+    );
 
-    let tulipClicks = 0;
-    tulip.addEventListener('click', () => { tulipClicks++; const msgs = ['This tulip smells like your laugh','Every petal remembers your name','One more tulip for Ria','Your tulips outshine the sky']; showToast(msgs[tulipClicks % msgs.length]); if(tulipClicks >= 4){ showToast('You gathered a garden 🌷'); tulipClicks = 0; } }, {passive:true});
-    tulip.addEventListener('touchstart', (e) => { e.preventDefault(); tulip.click(); }, {passive:false});
+    // ---------- Typewriter messages ----------
+    const tw = $('#typewriter');
+    const messages = [
+      "Ria — every star reminds me of you.",
+      "I made this little galaxy just for you.",
+      "Click the stars, answer the quiz, and join me among the constellations.",
+      "When you say 'yes', my universe becomes complete."
+    ];
+    let mi=0;let tpos=0;let typing=true;
+    function startType(){
+      tw.innerText='';tpos=0;typing=true;typeChar();
+    }
+    function typeChar(){
+      if(!typing) return;
+      const cur = messages[mi];
+      if(tpos<=cur.length){tw.innerText = cur.slice(0,tpos);tpos++;setTimeout(typeChar,40+Math.random()*40)}else{typing=false;setTimeout(()=>{mi=(mi+1)%messages.length;typing=true;tpos=0;typeChar()},2200)}
+    }
+    startType();
 
-    /* ------------------ Compatibility meter (preserved) ------------------ */
-    const compatFill = document.getElementById('compat-fill');
-    const compatPercent = document.getElementById('compat-percent');
-    document.getElementById('calc-compat').addEventListener('click', () => { const nm = document.getElementById('name-input').value.trim(); if(!nm){ showToast("Type a name (try Ria)"); return; } let h = 0; for(let ch of (nm.toLowerCase() + "_priyanshu")) h = (h*31 + ch.charCodeAt(0)) % 1000; let val = 92 + (h % 8) + Math.floor(Math.random()*5); if(nm.toLowerCase().includes('ria')) val = 100; compatFill.style.width = val + '%'; compatPercent.textContent = val + '%'; if(val >= 99) { showToast('Perfect match — obvious 😌'); unlockAchievement('perfect-match'); } else showToast('Compatibility calculated — cute result'); }, {passive:true});
+    // ---------- Mini Quiz ----------
+    const quizQ = $('#quizQ');
+    const quizData = [
+      {q:"Where did we first meet?",opts:["College","Cafe","Online","Under the stars"],a:3},
+      {q:"What is Ria's favorite thing?",opts:["Mountains","Space & Stars","Chocolate","Rain"],a:1},
+      {q:"What do I dream to do with Ria?",opts:["Travel the world","Build a home","Watch a thousand sunsets","All of these"],a:3}
+    ];
+    let qIndex=0;let score=0;
+    $('#btnQuiz').addEventListener('click',()=>{
+      score=0;qIndex=0;renderQ();miniLog.innerText='Quiz started — good luck!';
+    });
+    function renderQ(){
+      const q = quizData[qIndex];
+      quizQ.innerHTML = '<div style="font-weight:700;margin-bottom:8px">Q'+(qIndex+1)+'. '+q.q+'</div>' +
+        q.opts.map((o,i)=>`<button class="btn small" onclick="answer(${i})" style="display:block;margin:6px 0;border-radius:10px;text-align:left">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
+    }
+    window.answer = function(i){
+      const q = quizData[qIndex];
+      if(i===q.a){score++;miniLog.innerText='Nice! Correct.';}else{miniLog.innerText='Oh! That one was tricky.'}
+      qIndex++;
+      if(qIndex<quizData.length){renderQ();}else{quizQ.innerHTML = '<div style="font-weight:700">Quiz complete!</div><div style="margin-top:8px">Score: '+score+' / '+quizData.length+'</div>';
+        log.innerText = 'Quiz finished — score '+score+'/'+quizData.length;
+        if(score>=2){miniLog.innerText='You unlocked the final proposal! Click "Show Final Proposal"';}
+      }
+    }
 
-    /* ------------------ Unlock puzzle (preserved) ------------------ */
-    const order = ['eyes','smile','heart']; let progress = [];
-    document.querySelectorAll('.puzzle button').forEach(btn => { btn.addEventListener('click', () => { const k = btn.dataset.key; progress.push(k); btn.animate([{transform:'scale(1)'},{transform:'scale(0.92)'}], {duration:140, fill:'forwards'}); if(progress.length === order.length){ if(progress.join(',') === order.join(',')){ showToast('Heart unlocked ❤️'); openProposal(); unlockAchievement('puzzle-unlock'); } else { showToast('Not quite — try another combination'); } progress = []; } }, {passive:true}); });
+    // ---------- Launch Rocket ----------
+    const rocket = $('#rocket');
+    $('#btnLaunch').addEventListener('click',()=>{
+      rocket.classList.remove('launching');void rocket.offsetWidth;rocket.classList.add('launching');miniLog.innerText='Launching mission to Ria... 🚀';
+      setTimeout(()=>miniLog.innerText='Rocket reached orbit — message delivered to Ria ❤️',2600);
+    });
+    rocket.addEventListener('click',()=>{document.getElementById('btnLaunch').click();});
 
-    /* ------------------ Memory match (preserved) ------------------ */
-    const memoryGrid = document.getElementById('memory-grid');
-    const resetMemory = document.getElementById('reset-memory');
-    const emojis = ['🌷','💫','✨','💍','🌙','⭐','❤️','🕊️'];
-    let mem = { cards: [], first: null, second: null, lock:false, pairs:0 };
-    function setupMemory(){ memoryGrid.innerHTML = ''; mem = { cards: [], first: null, second: null, lock:false, pairs:0 }; const deck = emojis.slice(0,6).concat(emojis.slice(0,6)); for(let i=deck.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [deck[i], deck[j]]=[deck[j], deck[i]]; } deck.forEach(sym => { const c = document.createElement('div'); c.className = 'card'; c.dataset.sym = sym; c.textContent = ''; c.addEventListener('click', () => { if(mem.lock || c === mem.first || c.classList.contains('matched')) return; revealCard(c); }, {passive:true}); memoryGrid.appendChild(c); mem.cards.push(c); }); }
-    function revealCard(c){ c.textContent = c.dataset.sym; c.style.background = 'linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))'; if(!mem.first) mem.first = c; else { mem.second = c; checkMem(); } }
-    function checkMem(){ if(mem.first.dataset.sym === mem.second.dataset.sym){ mem.first.classList.add('matched'); mem.second.classList.add('matched'); mem.pairs++; mem.first = null; mem.second = null; showToast('Match! ❤️'); if(mem.pairs >= 6) { setTimeout(()=> showToast('You matched the memories — ready for the next chapter'), 300); unlockAchievement('memory-master'); } } else { mem.lock = true; setTimeout(()=>{ mem.first.textContent = ''; mem.second.textContent = ''; mem.first.style.background = ''; mem.second.style.background = ''; mem.first = null; mem.second = null; mem.lock = false; showToast('Not a match — try again'); }, 900); } }
-    resetMemory.addEventListener('click', setupMemory, {passive:true}); setupMemory();
+    // ---------- Find Ria's Star ----------
+    $('#btnFindStar').addEventListener('click',()=>{
+      miniLog.innerText='Looking for Ria\'s star...';
+      // animate stars regenerate and highlight one
+      const fs = document.querySelectorAll('.floatingStar');
+      const pick = fs[Math.floor(Math.random()*fs.length)];
+      if(pick){
+        pick.click();
+        const rc = pick.getBoundingClientRect();
+        foundMsg.style.left=(rc.left+rc.width/2)+'px';foundMsg.style.top=(rc.top+rc.height/2)+'px';foundMsg.style.display='block';
+        setTimeout(()=>foundMsg.style.display='none',2200);
+      }
+    });
 
-    /* ------------------ Spin wheel (preserved) ------------------ */
-    const spinBtn = document.getElementById('spin-wheel');
-    const wheel = document.getElementById('wheel');
-    const wheelMsgs = ['A tulip for your smile','A secret kiss','A future picnic','A starlit dance','A silly promise','A forever'];
-    spinBtn.addEventListener('click', () => { const spins = 3 + Math.floor(Math.random()*3); const angle = 360 * spins + Math.floor(Math.random()*360); wheel.animate([{transform:'rotate(0deg)'}, {transform:`rotate(${angle}deg)`}], { duration: 2000 + Math.random()*900, easing: 'cubic-bezier(.2,.9,.2,1)' }); setTimeout(()=> showToast(wheelMsgs[Math.floor(Math.random()*wheelMsgs.length)]), 1900); }, {passive:true});
+    // ---------- Secret Letter (typing 'ria') ----------
+    let keySeq = '';
+    const secret = `My dearest Ria,\n\nFrom the moment I first saw your smile I knew my nights would look different—full of stars and soft light. This little galaxy I built for you has one simple question at its center: will you be my forever?\n\nAll my love,\nPriyanshu ✨`;
+    $('#btnLetter').addEventListener('click',openLetter);
+    document.addEventListener('keydown',(e)=>{
+      keySeq += e.key.toLowerCase(); if(keySeq.length>6) keySeq=keySeq.slice(-6);
+      if(keySeq.includes('ria')){openLetter();keySeq='';}
+    });
+    function openLetter(){
+      $('#secretLetter').innerText = secret;$('#letterModal').classList.add('show');log.innerText='Secret letter opened';miniLog.innerText='A soft letter appears...';
+    }
+    $('#closeLetter').addEventListener('click',()=>{$('#letterModal').classList.remove('show');});
 
-    /* ------------------ Proposal modal (preserved) ------------------ */
-    const modal = document.getElementById('proposal-modal');
-    document.getElementById('open-propose').addEventListener('click', openProposal, {passive:true});
-    function openProposal(){ document.getElementById('proposal-poem').textContent = '"' + poemText.split('\n').slice(0,6).join(' ') + '...' + '"'; modal.classList.add('show'); celebrateAtElement(document.querySelector('.logo')); }
-    document.getElementById('no-btn').addEventListener('mouseenter', e => { const btn = document.getElementById('no-btn'); const rx = (Math.random()*0.6 - 0.3) * window.innerWidth; const ry = (Math.random()*0.4 - 0.2) * window.innerHeight; btn.style.transform = `translate(${rx}px, ${ry}px)`; showToast('No is playful — try the heart ❤️'); }, {passive:true});
-    document.getElementById('no-btn').addEventListener('click', () => { const btn = document.getElementById('no-btn'); btn.style.transform = `translate(${Math.random()*240-120}px, ${Math.random()*120-60}px)`; showToast('No is shy — try again 🙂'); }, {passive:true});
-    document.getElementById('yes-btn').addEventListener('click', () => { modal.classList.remove('show'); celebrateYes(); setTimeout(() => showFinalScreen(), 420); }, {passive:true});
+    // ---------- Final Proposal ----------
+    const finalModal = $('#finalModal');
+    const finalPoem = $('#finalPoem');
+    const poem = `Ria —\n\nAmong a thousand stars, I chose you.\nEvery little light in this sky whispers your name.\nIf you say yes, I promise to make every night feel like this — warm, bright and ours.\n\nSay you'll be my forever star. 🌟❤️`;
+    $('#btnFinal').addEventListener('click',()=>{finalPoem.innerText = poem;finalModal.classList.add('show');miniLog.innerText='Final scene — your proposal is ready.'});
+    $('#yesBtn').addEventListener('click',()=>{finalModal.querySelector('h2').innerText='She said YES ✨💍';finalModal.querySelector('p').innerText='Thank you, Ria. Welcome to our forever.';miniLog.innerText='SHE SAID YES! Congratulations 🌟';});
+    $('#noBtn').addEventListener('click',()=>{finalModal.classList.remove('show');miniLog.innerText='A playful prank — try again?';});
 
-    function celebrateYes(){ for(let i=0;i<140;i++){ setTimeout(()=> spawnPetal(rand(0, window.innerWidth), -40, 1.6), i*7); } showToast('She said YES — fireworks of tulips!'); unlockAchievement('she-said-yes'); }
+    // ---------- Reset ----------
+    $('#btnReset').addEventListener('click',()=>{document.querySelectorAll('.floatingStar').forEach(e=>e.remove());generateInteractiveStars(18);miniLog.innerText='Reset the stars.';log.innerText='Galaxy reset.'});
 
-    function showFinalScreen(){ const full = document.createElement('div'); full.style.position = 'fixed'; full.style.inset = 0; full.style.zIndex = 999999; full.style.display = 'flex'; full.style.alignItems = 'center'; full.style.justifyContent = 'center'; full.style.flexDirection = 'column'; full.style.background = 'linear-gradient(180deg, rgba(7,3,10,0.96), rgba(6,2,9,0.98))'; full.innerHTML = `<div style="text-align:center;color:white;max-width:980px;padding:24px"><h1 style="font-size:40px;margin-bottom:8px;color:var(--accent)">Ria — will you marry me?</h1><p style="color:rgba(255,255,255,0.85);font-size:18px;line-height:1.6">${poemText.replace(/\n/g,'<br/>')}</p><div style="margin-top:18px"><button id="final-love" style="padding:12px 18px;border-radius:12px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#111;font-weight:700;">Always</button></div></div>`; document.body.appendChild(full); document.getElementById('final-love').addEventListener('click', () => { showToast('Forever starts now 🌷'); full.animate([{opacity:1},{opacity:0}], { duration:1200, delay:1200 }).onfinish = () => full.remove(); }, {passive:true}); }
+    // ---------- Small helper: regenerate stars on click area resize ----------
+    let resizeTO;new ResizeObserver(()=>{clearTimeout(resizeTO);resizeTO=setTimeout(()=>generateInteractiveStars(18),200)}).observe(playArea);
 
-    /* ------------------ Toast (preserved) ------------------ */
-    let toastTimer = null;
-    function showToast(text){ let t = document.getElementById('site-toast'); if(!t){ t = document.createElement('div'); t.id = 'site-toast'; t.style.position = 'fixed'; t.style.right = '18px'; t.style.bottom = '18px'; t.style.padding = '12px 16px'; t.style.borderRadius = '12px'; t.style.background = 'linear-gradient(90deg, rgba(0,0,0,0.6), rgba(255,255,255,0.02))'; t.style.color = 'white'; t.style.zIndex = 999999; t.style.maxWidth = '78%'; t.style.fontSize = '14px'; document.body.appendChild(t); } t.textContent = text; t.animate([{opacity:0, transform:'translateY(8px)'},{opacity:1, transform:'translateY(0)'}], {duration:260}); if(toastTimer) clearTimeout(toastTimer); toastTimer = setTimeout(()=> { t.animate([{opacity:1, transform:'translateY(0)'},{opacity:0, transform:'translateY(8px)'}], {duration:380}).onfinish = () => t.remove(); }, 3200); }
+    // ---------- Ambient synth (simple) ----------
+    try{
+      const audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      const master = audioCtx.createGain();master.gain.value=0.07;master.connect(audioCtx.destination);
+      function playNote(freq,dur,when){const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(0.0001,when);g.gain.linearRampToValueAtTime(0.6,when+0.02);g.gain.exponentialRampToValueAtTime(0.001,when+dur);o.connect(g);g.connect(master);o.start(when);o.stop(when+dur+0.02)}
+      function ambient(){const now=audioCtx.currentTime;playNote(220+Math.random()*120,1.6,now);setTimeout(ambient,1800+Math.random()*2200)}
+      // start on user gesture
+      const startAudio = ()=>{if(audioCtx.state!=='running') audioCtx.resume();ambient();document.removeEventListener('click',startAudio)};
+      document.addEventListener('click',startAudio);
+    }catch(e){console.warn('Audio not allowed',e)}
 
-    /* ------------------ Audio (preserved and extended) ------------------ */
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    const audioCtx = new (AudioCtx)();
-    let playing = false, musicTimer = null;
-    function playTune(){ if(!AudioCtx) { showToast('Audio not supported'); return; } if(playing){ audioCtx.suspend(); playing = false; document.getElementById('play-music').textContent = 'Play music'; if(musicTimer) { clearInterval(musicTimer); musicTimer = null; } return; } audioCtx.resume().then(()=> { playing = true; document.getElementById('play-music').textContent = 'Pause music'; const master = audioCtx.createGain(); master.gain.value = 0.26; master.connect(audioCtx.destination); const notes = [196, 261.63, 329.63, 392, 523.25]; let i = 0; musicTimer = setInterval(()=>{ const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = 'sine'; osc.frequency.value = notes[i % notes.length]; osc.connect(gain); gain.connect(master); const now = audioCtx.currentTime; gain.gain.setValueAtTime(0.0001, now); gain.gain.exponentialRampToValueAtTime(0.14, now + 0.03); gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2); osc.start(now); osc.stop(now + 1.2); i++; if(!playing){ clearInterval(musicTimer); musicTimer = null; } }, 420); }).catch(err => console.warn('Audio resume error', err)); }
-    document.getElementById('play-music').addEventListener('click', playTune, {passive:true});
+    // ---------- Small startup log ----------
+    miniLog.innerText='Galaxy initialized. Click anywhere to wake the music.';
 
-    /* ------------------ Stars overlay (preserved) ------------------ */
-    const starsOverlay = document.getElementById('stars-overlay');
-    document.getElementById('toggle-stars').addEventListener('click', toggleStars, {passive:true});
-    function toggleStars(){ starsOverlay.classList.toggle('on'); if(starsOverlay.classList.contains('on')) showToast('Stargazing mode on ✨'); else showToast('Stargazing off'); }
-    (function buildStars(){ const div = starsOverlay; const sCanvas = document.createElement('canvas'); sCanvas.style.width='100%'; sCanvas.style.height='100%'; sCanvas.style.display='block'; div.appendChild(sCanvas); const sctx = sCanvas.getContext('2d'); let w=innerWidth, h=innerHeight, dpr = Math.max(1, devicePixelRatio || 1); function resizeS(){ w = innerWidth; h = innerHeight; sCanvas.width = Math.round(w*dpr); sCanvas.height = Math.round(h*dpr); sCanvas.style.width = w+'px'; sCanvas.style.height = h+'px'; sctx.setTransform(dpr,0,0,dpr,0,0); } resizeS(); window.addEventListener('resize', resizeS, {passive:true}); const stars = []; for(let i=0;i<180;i++) stars.push({x:rand(0,w), y:rand(0,h), r:rand(0.3,1.6), a:rand(0.2,1), tw:rand(1000,4000)}); function drawStars(){ sctx.clearRect(0,0,w,h); sctx.fillStyle='rgba(255,255,255,0.02)'; for(let s of stars){ sctx.beginPath(); sctx.globalAlpha = 0.1 + Math.abs(Math.sin(Date.now()/s.tw))*s.a; sctx.fillStyle = 'white'; sctx.arc(s.x, s.y, s.r, 0, Math.PI*2); sctx.fill(); } requestAnimationFrame(drawStars); } drawStars(); })();
-
-    /* ------------------ Modes (preserved + extras) ------------------ */
-    let gardenMode=false, moonMode=false, heartbeatOn=false; let heartbeatInt=null; let heartPulse = null;
-    document.getElementById('toggle-garden').addEventListener('click', ()=> { gardenMode = !gardenMode; if(gardenMode){ document.body.style.background = 'linear-gradient(180deg,#041114 0%, #07141b 100%)'; for(let i=0;i<80;i++) spawnPetal(rand(0,innerWidth), rand(-200, innerHeight), 1.2); showToast('Tulip garden mode — soft and green 🌷'); } else { document.body.style.background = 'radial-gradient(1200px 600px at 10% 10%, rgba(255,80,160,0.06), transparent), linear-gradient(180deg,#06020a 0%, #09050f 60%)'; showToast('Garden mode off'); } }, {passive:true});
-    document.getElementById('toggle-moon').addEventListener('click', ()=> { moonMode = !moonMode; if(moonMode){ document.body.style.background = 'linear-gradient(180deg,#021 0%, #06041b 100%)'; showToast('Moonlight mode — soft and slow 🌙'); } else { document.body.style.background = 'radial-gradient(1200px 600px at 10% 10%, rgba(255,80,160,0.06), transparent), linear-gradient(180deg,#06020a 0%, #09050f 60%)'; showToast('Moonlight off'); } }, {passive:true});
-    document.getElementById('heartbeat-toggle').addEventListener('click', ()=> { heartbeatOn = !heartbeatOn; if(heartbeatOn){ document.body.animate([{transform:'scale(1)', filter:'brightness(1)'},{transform:'scale(1.01)', filter:'brightness(1.05)'},{transform:'scale(1)', filter:'brightness(1)'}], {duration:900, iterations:Infinity, easing:'ease-in-out'}); startHeartGlow(); showToast('Heartbeat mode on ❤️'); } else { document.body.getAnimations().forEach(a=>a.cancel()); stopHeartGlow(); showToast('Heartbeat mode off'); } }, {passive:true});
-
-    function startHeartGlow(){ if(heartPulse) return; heartPulse = setInterval(()=>{ const glow = document.createElement('div'); glow.style.position = 'fixed'; glow.style.inset = '0'; glow.style.background = 'radial-gradient(circle at center, rgba(255,90,150,0.12), transparent 60%)'; glow.style.zIndex = '5'; glow.style.pointerEvents = 'none'; document.body.appendChild(glow); glow.animate([{opacity:0},{opacity:1},{opacity:0}], {duration:700}).onfinish = ()=> glow.remove(); }, 900); }
-    function stopHeartGlow(){ clearInterval(heartPulse); heartPulse = null; }
-
-    /* ------------------ Virtual Hug & Hold (preserved) ------------------ */
-    document.getElementById('virtual-hug').addEventListener('click', ()=> { const hEl = document.querySelector('.hero-card'); hEl.animate([{transform:'scale(1)'},{transform:'scale(0.98)'},{transform:'scale(1)'}], {duration:420}); for(let i=0;i<24;i++) setTimeout(()=> spawnPetal(rand(0,innerWidth), rand(0, innerHeight), 1.2), i*20); showToast('A virtual hug — if I could, I would hold you close 🤗'); }, {passive:true});
-    const holdBtn = document.getElementById('hold-hand'); let holdTimer=null; holdBtn.addEventListener('touchstart', startHold, {passive:true}); holdBtn.addEventListener('mousedown', startHold, {passive:true}); function startHold(e){ if(holdTimer) clearTimeout(holdTimer); holdTimer = setTimeout(()=> { for(let i=0;i<36;i++) setTimeout(()=> spawnPetal(rand(0,innerWidth), rand(0, innerHeight), 1.6), i*10); showToast('Holding your hand — feels warmer 🤝'); }, 850); } ['touchend','mouseup','mouseleave','touchcancel'].forEach(ev => holdBtn.addEventListener(ev, ()=> { if(holdTimer) { clearTimeout(holdTimer); holdTimer=null; } }, {passive:true}));
-
-    /* ------------------ Promise jar (preserved) ------------------ */
-    const jar = document.getElementById('jar'); const jarPromisesEl = document.getElementById('jar-promises'); const promises = [ "I promise to listen.", "I promise to choose you.", "I promise to learn your favorite songs.", "I promise to grow with you.", "I promise tiny silly surprises.", "I promise to protect your tulips." ]; jar.addEventListener('click', ()=> { const idx = Math.floor(Math.random()*promises.length); const p = document.createElement('div'); p.className='promise'; p.textContent = promises[idx]; jarPromisesEl.prepend(p); p.animate([{transform:'translateY(8px)', opacity:0},{transform:'translateY(0)', opacity:1}], {duration:420}).onfinish = ()=>{}; showToast('A promise just for you 💌'); }, {passive:true});
-
-    /* ------------------ Secret Garden open (preserved) ------------------ */
-    const secretGarden = document.getElementById('secret-garden'); window.addEventListener('scroll', ()=> { if(window.scrollY > 180) { secretGarden.classList.add('open'); } }, {passive:true});
-    document.getElementById('secret-input').addEventListener('keydown', (e) => { if(e.key === 'Enter'){ const v = e.target.value.trim().toLowerCase(); if(v === 'tulip' || v === 'ria' || v === 'garden'){ secretGarden.classList.add('open'); showToast('Secret garden unlocked 🌿'); unlockAchievement('secret-garden'); } else if(v === 'forever'){ openLoveLetter(); } else showToast('Nothing happens — keep exploring'); } }, {passive:true});
-
-    /* ------------------ Smile detection fake (preserved) ------------------ */
-    document.getElementById('smile-test').addEventListener('click', () => { const r = Math.random(); if(r > 0.35) { showToast('I knew it — you smiled 😄'); for(let i=0;i<18;i++) setTimeout(()=> spawnPetal(rand(0,innerWidth), rand(0, innerHeight), 1), i*20); } else { showToast('Hmm — maybe a quiet smile? Try again 🙂'); } }, {passive:true});
-
-    /* ------------------ Tap/blush (preserved) ------------------ */
-    let tapCount = 0, lastTap=0; document.addEventListener('touchend', ()=> { fastTap(); }, {passive:true}); document.addEventListener('click', ()=> { fastTap(); }, {passive:true}); function fastTap(){ const now = Date.now(); if(now - lastTap < 420) tapCount++; else tapCount = 1; lastTap = now; if(tapCount >= 5){ const body = document.body; const anim = body.animate([{filter:'saturate(1)'},{filter:'saturate(1.25) hue-rotate(-6deg)'},{filter:'saturate(1)'}], {duration:900}); showToast("Stop, you're making my heart nervous... 😊"); tapCount = 0; } }
-
-    /* ------------------ Invisible string (preserved) ------------------ */
-    const stringLine = document.getElementById('string-line'); function spawnStringDot(x,y){ const d = document.createElement('div'); d.className='string-dot'; d.style.left = (x-4)+'px'; d.style.top = (y-4)+'px'; stringLine.appendChild(d); d.animate([{opacity:1, transform:'scale(1)'}, {opacity:0, transform:'scale(0.2) translateY(-30px)'}], {duration:900}).onfinish = ()=> d.remove(); }
-    const logoRect = () => document.querySelector('.logo').getBoundingClientRect(); setInterval(()=>{ const r = logoRect(); const x = r.left + r.width/2; const y = r.top + r.height/2; spawnStringDot(x + rand(-30,30), y + rand(-30,30)); }, 900); document.addEventListener('mousemove', (e) => { if(Math.random() > 0.85) spawnStringDot(e.clientX, e.clientY); }, {passive:true});
-
-    /* ------------------ Name magic (preserved + Ria pulse) ------------------ */
-    const nameInput = document.getElementById('name-input'); nameInput.addEventListener('input', () => { const v = nameInput.value.trim().toLowerCase(); if(v === 'ria'){ for(let i=0;i<26;i++) setTimeout(()=> spawnPetal(rand(0,innerWidth), rand(0, innerHeight), 1.2), i*12); showToast('This website waited for you, Ria ✨'); document.querySelector('.logo').animate([{transform:'scale(1)'},{transform:'scale(1.06)'},{transform:'scale(1)'}], {duration:900}); document.body.style.animation = 'riaPulse 1.6s ease-in-out infinite'; setTimeout(()=> document.body.style.animation = '', 5200); unlockAchievement('ria-arrival'); } }, {passive:true});
-
-    /* ------------------ header pulse (preserved) ------------------ */
-    document.querySelector('header').addEventListener('click', () => { const pulse = document.createElement('div'); pulse.style.position = 'fixed'; pulse.style.left = '50%'; pulse.style.top = '50%'; pulse.style.width = '30px'; pulse.style.height = '30px'; pulse.style.borderRadius = '50%'; pulse.style.background = 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(255,90,150,0.9))'; pulse.style.zIndex = 999998; pulse.style.transform = 'translate(-50%,-50%)'; document.body.appendChild(pulse); pulse.animate([{transform:'translate(-50%,-50%) scale(1)', opacity:1},{transform:'translate(-50%,-50%) scale(4)', opacity:0}], {duration:800}).onfinish = ()=> pulse.remove(); try { const osc = audioCtx.createOscillator(); const g = audioCtx.createGain(); osc.type = 'sine'; osc.frequency.value = 200; g.gain.value = 0.0001; osc.connect(g); g.connect(audioCtx.destination); const now = audioCtx.currentTime; g.gain.exponentialRampToValueAtTime(0.08, now+0.01); g.gain.exponentialRampToValueAtTime(0.0001, now+0.5); osc.start(now); osc.stop(now+0.55); } catch(e){} }, {passive:true});
-
-    /* ------------------ Secret: double-tap poem to propose (preserved) ------------------ */
-    poemEl.addEventListener('dblclick', ()=> { openProposal(); showToast('You found the secret line — I get shy now'); }, {passive:true});
-
-    /* ------------------ Achievements system (new) ------------------ */
-    function unlockAchievement(id){ try{ const shown = JSON.parse(localStorage.getItem('achievements') || '[]'); if(!shown.includes(id)){ shown.push(id); localStorage.setItem('achievements', JSON.stringify(shown)); showBadge(id); } }catch(e){} }
-    function showBadge(id){ const badge = document.getElementById('achievement-badge'); badge.textContent = '🏅 ' + (id.replace(/-/g,' ')).toUpperCase(); badge.style.display = 'block'; badge.animate([{transform:'translateY(-6px)', opacity:0},{transform:'translateY(0)', opacity:1}], {duration:420}); setTimeout(()=> badge.animate([{opacity:1},{opacity:0}], {duration:420}).onfinish = ()=> badge.style.display='none', 2400); }
-
-    /* ------------------ Catch the Heart mini-game (new) ------------------ */
-    const catchOverlay = document.getElementById('catch-overlay'); let catchInterval = null; let catchScore = 0;
-    function startCatchGame(){ stopCatchGame(); catchScore = 0; catchOverlay.style.pointerEvents='auto'; catchInterval = setInterval(()=> spawnCatchHeart(), 900); showToast('Catch the hearts! Click them to collect ♥'); unlockAchievement('catch-start'); setTimeout(()=> stopCatchGame(), 22000); }
-    function stopCatchGame(){ if(catchInterval) clearInterval(catchInterval); catchInterval = null; catchOverlay.innerHTML=''; catchOverlay.style.pointerEvents='none'; if(catchScore>0) { showToast('You caught '+catchScore+' hearts ❤️'); unlockAchievement('catch-success'); } }
-    function spawnCatchHeart(){ const h = document.createElement('div'); h.className='catch-heart'; h.style.left = Math.random()*(innerWidth-80)+'px'; h.style.top = Math.random()*(innerHeight-160)+'px'; h.innerHTML = '❤'; h.style.background = 'linear-gradient(90deg,#fff3,#ffd3)'; h.style.boxShadow = '0 8px 20px rgba(255,80,160,0.12)'; h.addEventListener('click', (e)=>{ catchScore++; showToast('Nice catch ♥'); animateCatchPop(h); h.remove(); }, {passive:true}); catchOverlay.appendChild(h); setTimeout(()=> { if(h.parentElement) h.animate([{opacity:1},{opacity:0}], {duration:600}).onfinish = ()=> h.remove(); }, 4500); }
-    function animateCatchPop(el){ const rect = el.getBoundingClientRect(); const conf = 14; for(let i=0;i<conf;i++){ const p = document.createElement('div'); p.style.position='fixed'; p.style.left = (rect.left + rect.width/2)+'px'; p.style.top = (rect.top + rect.height/2)+'px'; p.style.width='6px'; p.style.height='6px'; p.style.borderRadius='3px'; p.style.background = i%2? 'rgba(255,100,160,0.95)':'rgba(255,200,230,0.95)'; p.style.zIndex=999999; document.body.appendChild(p); const dx = (Math.random()-0.5)*160; const dy = (Math.random()-0.9)*160; p.animate([{transform:'translate(0,0) scale(1)', opacity:1},{transform:`translate(${dx}px,${dy}px) scale(0.2)`, opacity:0}], {duration:700 + Math.random()*300}).onfinish = ()=> p.remove(); } }
-
-    // expose quick game trigger for demo
-    window.startCatchGame = startCatchGame;
-
-    /* ------------------ Glitch / Console prank (new) ------------------ */
-    function tinyGlitch(){ document.body.classList.add('glitch'); setTimeout(()=> document.body.classList.remove('glitch'), 700); const msgs = ['ACCESSING HER HEART...','DECRYPTING FEELINGS...','ERROR: TOO DEEP']; const t = document.createElement('div'); t.style.position='fixed'; t.style.left='50%'; t.style.top='14%'; t.style.transform='translateX(-50%)'; t.style.zIndex=999999; t.style.background='rgba(0,0,0,0.6)'; t.style.color='white'; t.style.padding='12px 18px'; t.style.borderRadius='8px'; t.style.fontFamily='monospace'; t.textContent = msgs[Math.floor(Math.random()*msgs.length)]; document.body.appendChild(t); setTimeout(()=> t.animate([{opacity:1},{opacity:0}], {duration:600}).onfinish = ()=> t.remove(), 1200); }
-    // occasionally glitch
-    setInterval(()=>{ if(Math.random() > 0.985) tinyGlitch(); }, 2000);
-
-    /* ------------------ Konami code for God Mode (new) ------------------ */
-    const konami = [38,38,40,40,37,39,37,39,66,65]; let konIndex=0; window.addEventListener('keydown', (e)=>{ if(e.keyCode === konami[konIndex]){ konIndex++; if(konIndex === konami.length){ konIndex=0; toggleGodMode(); } } else konIndex = 0; });
-    let godMode=false; function toggleGodMode(){ godMode = !godMode; if(godMode){ document.body.style.filter='saturate(1.1)'; showToast('God Mode: Angelic'); unlockAchievement('god-mode'); for(let i=0;i<60;i++) setTimeout(()=> spawnPetal(rand(0,innerWidth), rand(0, innerHeight), 1.8), i*8); } else { document.body.style.filter=''; showToast('God Mode off'); } }
-
-    /* ------------------ Love Letter (forever) overlay (new) ------------------ */
-    function openLoveLetter(){ const letter = document.createElement('div'); letter.style.position = 'fixed'; letter.style.inset = '0'; letter.style.background = 'linear-gradient(180deg, rgba(4,2,6,0.96), rgba(6,2,9,0.98))'; letter.style.zIndex = '1000000'; letter.style.display = 'flex'; letter.style.alignItems = 'center'; letter.style.justifyContent = 'center'; letter.style.color = '#ffd6e8'; letter.style.fontSize = '20px'; letter.style.padding = '40px'; letter.style.textAlign = 'center'; letter.innerHTML = `
-      <div style="max-width:760px">
-        <h2 style="color:var(--accent);margin-bottom:8px">To Ria 💗</h2>
-        <p style="line-height:1.6;color:rgba(255,214,232,0.94);">If you found this… it means my heart trusted you enough to open everything. Not a game. Not a trick. Just me — hoping you feel safe here. If you stay, I will promise small things every day.</p>
-        <div style="margin-top:18px"><button id="close-letter" style="padding:10px 14px;border-radius:10px;border:0;background:var(--accent);color:#111;font-weight:700">Close</button></div>
-      </div>
-    `; document.body.appendChild(letter); document.getElementById('close-letter').addEventListener('click', ()=> { letter.animate([{opacity:1},{opacity:0}], {duration:420}).onfinish = ()=> letter.remove(); unlockAchievement('love-letter'); }); }
-
-    /* ------------------ Small extra: burning letter effect (new) ------------------ */
-    function burnLetterText(el){ /* placeholder if you want to program a canvas burn effect later */ }
-
-    /* ------------------ Catch game quick bind (demo button not added) ------------------ */
-    // example: startCatchGame(); to start the mini-game
-
-    /* ------------------ Simple gravity mode (new) ------------------ */
-    let gravityOn=false; function toggleGravity(){ gravityOn = !gravityOn; if(gravityOn){ document.body.style.transition='transform 2s linear'; document.querySelectorAll('.card, .panel, .game, .heart').forEach(n=> n.style.transition='transform 3s linear'); showToast('Gravity mode on — be gentle 🌪️'); } else { document.querySelectorAll('.card, .panel, .game, .heart').forEach(n=> n.style.transition=''); showToast('Gravity mode off'); } }
-    // optional toggle via konami or manual later
-
-    /* ------------------ Small helper expose for debugging ------------------ */
-    window._showToast = showToast; window._startCatch = startCatchGame; window._toggleGod = toggleGodMode; window._openLove = openLoveLetter; window._toggleGravity = toggleGravity;
-
-    // initial small init
-    setTimeout(()=> showToast('Website ready — share your heart ❤️'), 900);
-
-  })();
   </script>
 </body>
 </html>
