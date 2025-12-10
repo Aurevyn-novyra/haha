@@ -353,6 +353,29 @@
     }
 
     // ---------- Launch Rocket ----------
+    // Hyper realistic rocket particles
+    const particleStyle = document.createElement('style');
+    particleStyle.innerHTML = `.flame, .smoke{position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none}
+      .flame{background:linear-gradient(to bottom,#fff7c0,#ffd36b,#ff7a18,#ff3d00);animation:flameF 0.4s linear forwards}
+      .smoke{background:rgba(200,200,200,0.85);animation:smokeF 1.2s linear forwards}
+      @keyframes flameF{to{transform:translateY(30px) scale(0);opacity:0}}
+      @keyframes smokeF{to{transform:translateY(60px) scale(3);opacity:0}}`;
+    document.head.appendChild(particleStyle);
+
+    function spawnParticles(rocketEl){
+      const box = rocketEl.getBoundingClientRect();
+      for(let i=0;i<6;i++){
+        const f=document.createElement('div');f.className='flame';
+        f.style.left=(box.left+box.width/2 + (Math.random()*12-6))+'px';
+        f.style.top=(box.top+box.height)+'px';
+        document.body.appendChild(f);
+        const s=document.createElement('div');s.className='smoke';
+        s.style.left=f.style.left;s.style.top=f.style.top;
+        document.body.appendChild(s);
+        setTimeout(()=>{f.remove();s.remove();},1200);
+      }
+    }
+
     const rocket = $('#rocket');
     $('#btnLaunch').addEventListener('click',()=>{
       rocket.classList.remove('launching');void rocket.offsetWidth;rocket.classList.add('launching');miniLog.innerText='Launching mission to Ria... 🚀';
